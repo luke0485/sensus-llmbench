@@ -70,7 +70,7 @@
   .facts span{padding:8px 12px 0 0;margin-right:12px;border-right:1px solid #BDBDBD;
               font-size:10px;letter-spacing:.01em;color:#9A9A9A}
   .facts span:last-child{border-right:0;margin-right:0}
-  .hero-mark{text-align:right}
+  .hero-mark{text-align:right;align-self:end;justify-self:end;transform:translate(14px, 18px)}
   .hero-mark .script{font-family:var(--script);font-size:clamp(86px,12vw,164px);
                      line-height:.78;transform:rotate(-7deg);display:inline-block;
                      letter-spacing:-.03em;color:var(--ink)}
@@ -317,6 +317,7 @@
 <section class="binary" id="binary">
   <div class="wrap">
     <div class="binary-art" id="binaryArt">
+      <!-- Hand silhouette from Font Awesome Free (CC BY 4.0); see docs/attribution.md. -->
       <canvas id="bitCanvas" role="img" aria-label="用 0 和 1 画出的双手，捧起一颗红色的心"></canvas>
     </div>
     <div class="binary-caption">
@@ -393,7 +394,7 @@
 
     var art = document.getElementById('binaryArt');
     var canvas = document.getElementById('bitCanvas');
-    var heartPath = "M288 400 C288 400 190 336 190 268 C190 220 242 200 288 246 C334 200 386 220 386 268 C386 336 288 400 288 400 Z";
+    var heartPath = "M288 340 C288 340 208 286 208 228 C208 188 250 172 288 210 C326 172 368 188 368 228 C368 286 288 340 288 340 Z";
 
     function drawBits(){
       if (!canvas || !art) return;
@@ -408,41 +409,11 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, cssW, cssH);
 
-      var cell = cssW < 520 ? 5 : 6;
+      var cell = cssW < 520 ? 4 : 5;
       var cols = Math.floor(cssW / cell);
       var rows = Math.floor(cssH / cell);
 
-      function roundRect(c, x, y, w, h, r){
-        c.beginPath();
-        c.moveTo(x + r, y);
-        c.arcTo(x + w, y, x + w, y + h, r);
-        c.arcTo(x + w, y + h, x, y + h, r);
-        c.arcTo(x, y + h, x, y, r);
-        c.arcTo(x, y, x + w, y, r);
-        c.closePath();
-        c.fill();
-      }
-
-      function drawHand(c){
-        roundRect(c, 130, 220, 250, 245, 80);
-        function finger(x, y, w, h, r, deg, bx, by){
-          c.save();
-          c.translate(bx, by);
-          c.rotate(deg * Math.PI / 180);
-          c.translate(-bx, -by);
-          roundRect(c, x, y, w, h, r);
-          c.restore();
-        }
-        finger(145, 55, 48, 235, 24, -9, 169, 280);
-        finger(205, 30, 50, 260, 25, -3, 230, 280);
-        finger(265, 45, 48, 245, 24, 3, 289, 280);
-        finger(325, 80, 44, 210, 22, 9, 347, 280);
-        c.save();
-        c.translate(105, 330);
-        c.rotate(-38 * Math.PI / 180);
-        roundRect(c, -30, -80, 60, 210, 30);
-        c.restore();
-      }
+    var handPath = "M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V336c0 1.5 0 3.1 .1 4.6L67.6 283c-16-15.2-41.3-14.6-56.6 1.4s-14.6 41.3 1.4 56.6L124.8 448c43.1 41.1 100.4 64 160 64H304c97.2 0 176-78.8 176-176V128c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V32z";
 
       function maskFor(kind){
         var m = document.createElement('canvas');
@@ -455,20 +426,20 @@
           mc.fill(new Path2D(heartPath));
         } else {
           mc.save();
-          mc.translate(52, 250);
-          mc.translate(97, 138);
-          mc.rotate(30 * Math.PI / 180);
-          mc.translate(-97, -138);
-          mc.scale(0.38, 0.48);
-          drawHand(mc);
+          mc.translate(52, 240);
+          mc.translate(97, 128);
+          mc.rotate(28 * Math.PI / 180);
+          mc.translate(-97, -128);
+          mc.scale(0.38, 0.50);
+          mc.fill(new Path2D(handPath));
           mc.restore();
           mc.save();
-          mc.translate(524, 250);
-          mc.translate(-97, 138);
-          mc.rotate(-30 * Math.PI / 180);
-          mc.translate(97, -138);
-          mc.scale(-0.38, 0.48);
-          drawHand(mc);
+          mc.translate(524, 240);
+          mc.translate(-97, 128);
+          mc.rotate(-28 * Math.PI / 180);
+          mc.translate(97, -128);
+          mc.scale(-0.38, 0.50);
+          mc.fill(new Path2D(handPath));
           mc.restore();
         }
         var data = mc.getImageData(0, 0, cols, rows).data;
