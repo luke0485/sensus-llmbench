@@ -37,7 +37,7 @@
 ## 怎么跑
 
 ```bash
-git clone https://github.com/luke0485/sensus-llm-bench
+git clone https://github.com/luke0485/sensus-llmbench
 cd sensus-bench
 export OPENAI_API_KEY=sk-...
 python eval/run.py --base-url https://api.openai.com/v1 \

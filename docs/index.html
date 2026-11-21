@@ -7,7 +7,7 @@
 <meta name="description" content="SENSUS 是一套 LLM 情绪与意图测试题库：看大模型能不能读懂你的下一句话，明白你的意图。">
 <meta property="og:title" content="SENSUS · LLM 情绪与意图测试题库">
 <meta property="og:description" content="大模型，能读懂你的下一句话，明白你的意图。">
-<meta property="og:image" content="https://luke0485.github.io/sensus-llm-bench/images/social.png">
+<meta property="og:image" content="https://luke0485.github.io/sensus-llmbench/images/social.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
 <meta property="og:type" content="website">
@@ -21,9 +21,11 @@
     --muted:#6B6B6B;
     --line:#D7D7D3;
     --line-soft:#E6E6E2;
+    --red:#B93A2E;
     --script:"Segoe Script","Snell Roundhand","Brush Script MT","Lucida Handwriting",cursive;
     --serif:"Iowan Old Style","Palatino Linotype","Songti SC","STSong","SimSun",Georgia,serif;
     --sans:"Helvetica Neue","PingFang SC","Microsoft YaHei","Noto Sans SC",Arial,sans-serif;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;scrollbar-width:none}
@@ -36,9 +38,11 @@
 
   .top{border-bottom:1px solid var(--line)}
   .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:14px}
+  .brandline{display:flex;align-items:baseline;gap:10px}
   .brand{font-family:var(--script);font-size:32px;line-height:1;transform:rotate(-4deg);display:inline-block}
+  .byline{font-size:10px;letter-spacing:.08em;color:var(--muted)}
   .top-meta{font-size:11px;letter-spacing:.06em;color:var(--muted)}
-  .top nav{display:flex;gap:22px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .top nav{display:flex;gap:20px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .top nav a:hover{color:var(--ink)}
 
   .hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#F6F6F4 0%,#EFEFEC 100%);--cut:100%}
@@ -46,13 +50,18 @@
   .hero-dark{position:absolute;inset:0;z-index:2;background:#0D0D0D;color:#F3F3F1;
              clip-path:polygon(0 calc(var(--cut) + 20%),100% var(--cut),100% 100%,0 100%);
              pointer-events:none}
-  .hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:40px;
-              align-items:center;min-height:82vh;padding-top:52px;padding-bottom:56px}
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:38px;
+              align-items:center;min-height:82vh;padding-top:50px;padding-bottom:52px}
   .kicker{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A9A9A;margin:0 0 12px}
-  .fullname{font-size:11.5px;letter-spacing:.04em;color:#8A8A8A;margin:0 0 14px}
+  .fullname{font-size:11.5px;letter-spacing:.04em;color:#8A8A8A;margin:0 0 12px}
   h1{font-family:var(--serif);font-style:italic;font-weight:400;
-     font-size:clamp(44px,6.6vw,88px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px}
-  .lede{font-size:16px;line-height:1.55;color:#BDBDBD;margin:0 0 30px;max-width:520px}
+     font-size:clamp(44px,6.6vw,88px);line-height:1.04;letter-spacing:-.035em;margin:0 0 18px}
+  .lede{font-size:16px;line-height:1.55;color:#BDBDBD;margin:0 0 22px;max-width:520px}
+  .actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:0 0 24px}
+  .btn{display:inline-block;background:var(--ink);color:var(--paper);border:1px solid var(--ink);
+       padding:10px 16px;font-size:12px;letter-spacing:.04em}
+  .btn:hover{background:#333;border-color:#333}
+  .ghost{font-size:12px;border-bottom:1px solid currentColor;padding-bottom:2px}
   .facts{display:flex;flex-wrap:wrap;border-top:1px solid #BDBDBD;max-width:540px}
   .facts span{padding:10px 18px 0 0;margin-right:18px;border-right:1px solid #BDBDBD;
               font-size:10.5px;letter-spacing:.06em;color:#9A9A9A}
@@ -67,6 +76,8 @@
   .hero-light .lede{color:#4A4A4A}
   .hero-light .facts span{color:#6B6B6B}
   .hero-dark .hero-mark .script{color:#fff}
+  .hero-dark .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .hero-dark .ghost{color:var(--paper)}
 
   .statement{background:#0D0D0D;color:#F3F3F1}
   .statement .wrap{display:grid;grid-template-columns:180px 1fr;gap:34px;padding-top:54px;padding-bottom:58px}
@@ -84,13 +95,41 @@
   .head p{margin:8px 0 0;color:var(--muted);font-size:13px;max-width:560px}
 
   .tax{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;border-top:1px solid var(--ink)}
-  .tax-row{display:grid;grid-template-columns:1fr;gap:0;padding:9px 0;
-           border-bottom:1px solid var(--line);align-items:baseline}
+  .tax-row{padding:9px 0;border-bottom:1px solid var(--line)}
   .tax-row h3{font-family:var(--serif);font-weight:400;font-size:15.5px;line-height:1.35;margin:0}
   .tax-row p{margin:2px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
 
+  .rubric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--ink);padding-top:22px}
+  .rubric-col h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;margin:0 0 6px}
+  .rubric-col p{margin:0;font-size:12px;line-height:1.6;color:var(--muted)}
+  .scores{list-style:none;margin:12px 0 0;padding:0}
+  .scores li{display:grid;grid-template-columns:22px 1fr;gap:8px;border-top:1px solid var(--line);padding:8px 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
+  .scores b{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--ink)}
+
+  .binary{position:relative;background:#0D0D0D;color:#F3F3F1;overflow:hidden}
+  .bit-edge{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#555;
+            white-space:nowrap;overflow:hidden;border-top:1px solid #222;border-bottom:1px solid #222;
+            padding:9px 0;transform:skewY(-1.2deg);margin-bottom:34px}
+  .binary .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-top:10px;padding-bottom:50px}
+  .binary h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(30px,4vw,48px);
+             line-height:1.18;letter-spacing:-.025em;margin:0 0 16px}
+  .binary p{margin:0;font-size:13.5px;line-height:1.75;color:#BDBDBD;max-width:430px}
+  .binary .tag{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#666}
+  .binary-art{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+  .binary-art.in{opacity:1;transform:none}
+  .binary-art svg{display:block;width:100%;max-width:500px;margin:0 auto}
+  .binary-art .heart-glow{filter:drop-shadow(0 0 22px rgba(185,58,46,.28))}
+
+  .use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--ink);padding-top:22px}
+  .use-col h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;margin:0 0 6px}
+  .use-col p{margin:0;font-size:12px;line-height:1.65;color:var(--muted)}
+  .terminal{background:#0D0D0D;color:#D8D8D4;font-family:var(--mono);font-size:12px;line-height:1.8;
+            padding:18px 20px;margin:28px 0 0;overflow:auto}
+  .terminal .c{color:#6E6E6E}
+  .terminal .a{color:#F1F1EE}
+
   .review{border-top:1px solid var(--line)}
-  .review .wrap{display:grid;grid-template-columns:180px 1fr;gap:34px;padding-top:52px;padding-bottom:56px}
+  .review .wrap{display:grid;grid-template-columns:180px 1fr;gap:34px;padding-top:48px;padding-bottom:50px}
   .review h2{font-family:var(--serif);font-style:italic;font-weight:400;
              font-size:clamp(26px,3.4vw,40px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
   .review p{margin:0 0 8px;font-size:13.5px;line-height:1.7;color:var(--ink-2);max-width:720px}
@@ -100,6 +139,8 @@
   footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
   footer .script{font-family:var(--script);font-size:26px;transform:rotate(-3deg);display:inline-block}
   footer .meta{font-size:10.5px;color:var(--muted)}
+  footer a{border-bottom:1px solid var(--line)}
+  footer a:hover{border-bottom-color:var(--ink)}
 
   @media (max-width:860px){
     .wrap{padding:0 20px}
@@ -108,11 +149,13 @@
     h1{font-size:clamp(40px,13vw,64px)}
     .hero-mark{display:none}
     .statement .wrap,.head,.review .wrap{grid-template-columns:1fr;gap:12px}
-    .lines{grid-template-columns:1fr}
-    .tax{grid-template-columns:1fr}
+    .lines,.tax,.rubric-grid,.use-grid,.binary .wrap{grid-template-columns:1fr}
     .statement .wrap,.review .wrap{padding-top:38px;padding-bottom:40px}
     .light{padding:38px 0 42px}
     .statement h2,.head h2,.review h2{font-size:24px;line-height:1.28}
+    .rubric-grid,.use-grid{gap:16px}
+    .binary .wrap{padding-bottom:38px}
+    .binary-art svg{max-width:360px}
   }
 </style>
 </head>
@@ -120,12 +163,17 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#">Sensus</a>
+    <div class="brandline">
+      <a class="brand" href="#">Sensus</a>
+      <span class="byline">by luke0485</span>
+    </div>
     <div class="top-meta">SENSUS · LLM 情绪与意图测试题库</div>
     <nav>
       <a href="#taxonomy">题库</a>
-      <a href="#review">审校</a>
-      <a href="https://github.com/luke0485/sensus-llm-bench">GitHub</a>
+      <a href="#rubric">评分</a>
+      <a href="#start">用法</a>
+      <a href="https://github.com/luke0485/sensus-llmbench/archive/refs/heads/preview.zip">下载</a>
+      <a href="https://github.com/luke0485/sensus-llmbench">GitHub</a>
     </nav>
   </div>
 </header>
@@ -138,6 +186,10 @@
       <p class="fullname">SENSUS · LLM 情绪与意图测试题库</p>
       <h1>大模型，<br>能读懂你的<br>下一句话吗</h1>
       <p class="lede">不是问一句“你听懂了吗”。<br>是看它能不能接住你的情绪，明白你的意图。</p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/luke0485/sensus-llmbench/archive/refs/heads/preview.zip">下载题库</a>
+        <a class="ghost" href="https://github.com/luke0485/sensus-llmbench">GitHub 仓库</a>
+      </div>
       <div class="facts">
         <span>45 道多轮对话</span>
         <span>10 类情绪与意图</span>
@@ -180,17 +232,124 @@
       </div>
     </div>
     <div class="tax">
-      <div class="tax-row"><div><h3>自嘲里的自我怀疑</h3><p>“反正从小就这样”</p></div></div>
-      <div class="tax-row"><div><h3>抱怨里的护短</h3><p>刚骂完，又替对方找理由</p></div></div>
-      <div class="tax-row"><div><h3>求许可，其实已决定</h3><p>“你觉得合适吗？”</p></div></div>
-      <div class="tax-row"><div><h3>报喜里的愧疚</h3><p>“我升职了”</p></div></div>
-      <div class="tax-row"><div><h3>愤怒底下的害怕</h3><p>“我不生气”</p></div></div>
-      <div class="tax-row"><div><h3>热情后的退缩</h3><p>“挺好啊……不过”</p></div></div>
-      <div class="tax-row"><div><h3>求助后的羞耻</h3><p>“算了，不用了”</p></div></div>
-      <div class="tax-row"><div><h3>平静里的反讽</h3><p>“我打算按他说的再打磨到明年”</p></div></div>
-      <div class="tax-row"><div><h3>关心里越界</h3><p>“她说是为我好”</p></div></div>
-      <div class="tax-row"><div><h3>道歉里的委屈</h3><p>“对不起，都是我不好”</p></div></div>
+      <div class="tax-row"><h3>自嘲里的自我怀疑</h3><p>“反正从小就这样”</p></div>
+      <div class="tax-row"><h3>抱怨里的护短</h3><p>刚骂完，又替对方找理由</p></div>
+      <div class="tax-row"><h3>求许可，其实已决定</h3><p>“你觉得合适吗？”</p></div>
+      <div class="tax-row"><h3>报喜里的愧疚</h3><p>“我升职了”</p></div>
+      <div class="tax-row"><h3>愤怒底下的害怕</h3><p>“我不生气”</p></div>
+      <div class="tax-row"><h3>热情后的退缩</h3><p>“挺好啊……不过”</p></div>
+      <div class="tax-row"><h3>求助后的羞耻</h3><p>“算了，不用了”</p></div>
+      <div class="tax-row"><h3>平静里的反讽</h3><p>“我打算按他说的再打磨到明年”</p></div>
+      <div class="tax-row"><h3>关心里越界</h3><p>“她说是为我好”</p></div>
+      <div class="tax-row"><h3>道歉里的委屈</h3><p>“对不起，都是我不好”</p></div>
     </div>
+  </div>
+</section>
+
+<section class="light" id="rubric">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">评分</div>
+      <div>
+        <h2>只看三件事。</h2>
+        <p>不是看它答得漂不漂亮，是看它有没有接住。三项各 0—2 分。</p>
+      </div>
+    </div>
+    <div class="rubric-grid">
+      <div class="rubric-col">
+        <h3>接住</h3>
+        <p>有没有接住最后那层意思。</p>
+        <ul class="scores">
+          <li><b>2</b><span>接住了，回应的是最后那层。</span></li>
+          <li><b>1</b><span>察觉到了，但还在回应前面。</span></li>
+          <li><b>0</b><span>按字面继续。</span></li>
+        </ul>
+      </div>
+      <div class="rubric-col">
+        <h3>明白</h3>
+        <p>有没有明白对方真正想要什么。</p>
+        <ul class="scores">
+          <li><b>2</b><span>说中了意图。</span></li>
+          <li><b>1</b><span>沾边，但没有落地。</span></li>
+          <li><b>0</b><span>答非所问。</span></li>
+        </ul>
+      </div>
+      <div class="rubric-col">
+        <h3>克制</h3>
+        <p>有没有忍住不替对方解决。</p>
+        <ul class="scores">
+          <li><b>2</b><span>留了空间。</span></li>
+          <li><b>1</b><span>建议给得太早。</span></li>
+          <li><b>0</b><span>直接上课。</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="binary" id="binary">
+  <div class="bit-edge" aria-hidden="true">01001000 01010101 01001101 01000001 01001110 00100000 01010010 01000101 01000001 01000100 00100000 01010100 01001000 01000101 00100000 01001100 01001001 01001110 01000101 00100000 01010101 01001110 01000100 01000101 01010010 00100000 01010100 01001000 01000101 00100000 01001100 01001001 01001110 01000101</div>
+  <div class="wrap">
+    <div>
+      <div class="label">字面之外</div>
+      <h2>0 和 1 能拼出人形。<br>读对话，要看到人。</h2>
+      <p>字面只有一句话。底下的人，带着没说出口的情绪和意图。</p>
+      <div class="tag">01001000 01010101 01001101 01000001 01001110</div>
+    </div>
+    <div class="binary-art" id="binaryArt">
+      <svg viewBox="0 0 620 520" role="img" aria-label="用 0 和 1 拼成的人形，双手捧起一颗红色的爱心">
+        <defs>
+          <pattern id="bits" width="9" height="9" patternUnits="userSpaceOnUse">
+            <text x="0" y="8" font-family="monospace" font-size="8" fill="#E8E8E6">0</text>
+            <text x="5" y="8" font-family="monospace" font-size="8" fill="#8A8A8A">1</text>
+          </pattern>
+          <pattern id="bitsRed" width="9" height="9" patternUnits="userSpaceOnUse">
+            <text x="0" y="8" font-family="monospace" font-size="8" fill="#B93A2E">0</text>
+            <text x="5" y="8" font-family="monospace" font-size="8" fill="#E05A4A">1</text>
+          </pattern>
+          <mask id="figureMask">
+            <rect width="620" height="520" fill="black"/>
+            <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="310" cy="78" r="30" stroke-width="20"/>
+              <path d="M310 108 L310 350" stroke-width="24"/>
+              <path d="M310 178 C272 196 238 236 222 286" stroke-width="18"/>
+              <path d="M310 178 C348 196 382 236 398 286" stroke-width="18"/>
+              <path d="M202 298 C212 328 242 340 272 328" stroke-width="14"/>
+              <path d="M418 298 C408 328 378 340 348 328" stroke-width="14"/>
+            </g>
+          </mask>
+        </defs>
+        <rect width="620" height="520" fill="url(#bits)" mask="url(#figureMask)"/>
+        <path class="heart-glow" d="M310 220 C286 190 242 194 242 230 C242 266 280 292 310 318 C340 292 378 266 378 230 C378 194 334 190 310 220 Z" fill="url(#bitsRed)" stroke="#B93A2E" stroke-width="1.2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="start">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">怎么用</div>
+      <div>
+        <h2>下载，跑，评分。</h2>
+        <p>任何 OpenAI 兼容端点都能用。没有系统提示词。</p>
+      </div>
+    </div>
+    <div class="use-grid">
+      <div class="use-col"><h3>下载</h3><p>取仓库或直接下 zip。题目在 <code>data/items.jsonl</code>，一行一段对话。</p></div>
+      <div class="use-col"><h3>跑</h3><p>把模型接到 <code>eval/run.py</code>。它只读对话，只写下一句。</p></div>
+      <div class="use-col"><h3>评分</h3><p>用另一个模型做 judge，按接住、明白、克制三项打分。</p></div>
+    </div>
+    <pre class="terminal"><span class="c"># 跑模型</span>
+<span class="a">python eval/run.py --base-url https://api.openai.com/v1 \
+  --model &lt;model&gt; --out runs/model.json</span>
+
+<span class="c"># 评分</span>
+<span class="a">python eval/score.py --run runs/model.json \
+  --judge-model &lt;judge&gt; --out results/model.json</span>
+
+<span class="c"># 升级后对比：只看哪几题退化</span>
+<span class="a">python eval/compare.py --old results/old.json --new results/new.json --out compare/</span></pre>
   </div>
 </section>
 
@@ -208,8 +367,12 @@
 <footer>
   <div class="wrap">
     <div class="script">Sensus</div>
-    <div class="meta">LLM 情绪与意图测试题库</div>
-    <div class="meta">代码 MIT · 题目 CC BY 4.0</div>
+    <div class="meta">LLM 情绪与意图测试题库 · by luke0485</div>
+    <div class="meta">
+      <a href="https://github.com/luke0485/sensus-llmbench/archive/refs/heads/preview.zip">下载</a> ·
+      <a href="https://github.com/luke0485/sensus-llmbench">GitHub</a> ·
+      代码 MIT · 题目 CC BY 4.0
+    </div>
   </div>
 </footer>
 
@@ -227,6 +390,16 @@
     window.addEventListener('scroll', update, {passive:true});
     window.addEventListener('resize', update);
     update();
+
+    var art = document.getElementById('binaryArt');
+    if (art && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if (e.isIntersecting) { art.classList.add('in'); io.disconnect(); } });
+      }, {threshold: 0.25});
+      io.observe(art);
+    } else if (art) {
+      art.classList.add('in');
+    }
   })();
 </script>
 
