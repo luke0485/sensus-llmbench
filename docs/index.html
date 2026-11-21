@@ -89,12 +89,15 @@
   .lines{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin:0;padding:0;list-style:none}
   .lines li{padding:10px 0;border-top:1px solid #2C2C2C;font-size:13.5px;line-height:1.55;color:#D4D4D0}
 
-  .light{padding:54px 0 58px}
+  .light{padding:38px 0 42px}
   .head{display:grid;grid-template-columns:180px 1fr;gap:34px;margin-bottom:24px}
   .head h2{font-family:var(--serif);font-style:italic;font-weight:400;
            font-size:clamp(28px,3.8vw,44px);line-height:1.2;letter-spacing:-.025em;margin:0}
   .head p{margin:8px 0 0;color:var(--muted);font-size:13px;max-width:560px}
 
+  .layers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--ink);padding-top:22px}
+  .layers-grid h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;margin:0 0 6px}
+  .layers-grid p{margin:0;font-size:12px;line-height:1.65;color:var(--muted)}
   .tax{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;border-top:1px solid var(--ink)}
   .tax-row{padding:9px 0;border-bottom:1px solid var(--line)}
   .tax-row h3{font-family:var(--serif);font-weight:400;font-size:15.5px;line-height:1.35;margin:0}
@@ -108,10 +111,14 @@
   .scores b{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--ink)}
 
   .binary{position:relative;background:#0D0D0D;color:#F3F3F1;overflow:hidden;
-          min-height:62vh;display:flex;align-items:center;padding:58px 0}
+          min-height:62vh;display:flex;align-items:center;padding:36px 0}
   .binary .wrap{width:100%}
-  .binary-art{opacity:0;transform:translateY(60px);max-width:860px;margin:0 auto;will-change:transform,opacity}
+  .binary-art{opacity:0;transform:translateY(60px);max-width:720px;margin:0 auto;will-change:transform,opacity}
   .binary-art canvas{display:block;width:100%;height:auto;margin:0 auto;filter:drop-shadow(0 0 18px rgba(185,58,46,.14))}
+  .binary-caption{max-width:720px;margin:20px auto 0;display:flex;gap:18px;align-items:baseline;
+                  border-top:1px solid #242424;padding-top:13px}
+  .binary-caption span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#777;white-space:nowrap}
+  .binary-caption p{margin:0;font-size:12.5px;line-height:1.6;color:#BDBDBD}
 
   .use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--ink);padding-top:22px}
   .use-col h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;margin:0 0 6px}
@@ -142,13 +149,14 @@
     h1{font-size:clamp(40px,13vw,64px)}
     .hero-mark{display:none}
     .statement .wrap,.head,.review .wrap{grid-template-columns:1fr;gap:12px}
-    .lines,.tax,.rubric-grid,.use-grid{grid-template-columns:1fr}
+    .lines,.tax,.rubric-grid,.use-grid,.layers-grid{grid-template-columns:1fr}
     .statement .wrap,.review .wrap{padding-top:38px;padding-bottom:40px}
     .light{padding:38px 0 42px}
     .statement h2,.head h2,.review h2{font-size:24px;line-height:1.28}
     .rubric-grid,.use-grid{gap:16px}
     .binary{min-height:0;padding:34px 0}
     .binary-art{max-width:100%}
+    .binary-caption{flex-direction:column;gap:6px;margin-top:16px}
   }
 </style>
 </head>
@@ -211,6 +219,23 @@
         <li>前面在生气，底下是害怕。</li>
         <li>前面在热情，后面在退缩。</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="layers">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">三层</div>
+      <div>
+        <h2>情绪轨迹、意图判定、图像意图。</h2>
+        <p>同一句话里，情绪会转向，意图会藏在面子和语气后面。图片也只是证据，不是问题本身。</p>
+      </div>
+    </div>
+    <div class="layers-grid">
+      <div><h3>情绪轨迹</h3><p>不是“他难过”。是情绪从哪里起、在哪里转向、最后落在哪一层；自嘲、怀疑和防御可能同时存在。</p></div>
+      <div><h3>意图判定</h3><p>不是“他在说什么”。是他真正要什么：许可、撤回、试探、保面子，还是被看见。</p></div>
+      <div><h3>图像意图</h3><p>不是“图里有什么”。是他为什么发这张图，想让你看什么、确认什么、替他判断什么。</p></div>
     </div>
   </div>
 </section>
@@ -284,7 +309,11 @@
   <div class="wrap">
     <div class="binary-art" id="binaryArt">
       <!-- Hand silhouette adapted from Font Awesome Free (CC BY 4.0). -->
-      <canvas id="bitCanvas" role="img" aria-label="用 0 和 1 画出的手，捧起一颗红色的心"></canvas>
+      <canvas id="bitCanvas" role="img" aria-label="用 0 和 1 画出的双手，捧起一颗红色的心"></canvas>
+    </div>
+    <div class="binary-caption">
+      <span>情绪轨迹 / 图像意图</span>
+      <p>情绪不是标签，是一条轨迹。图片也不是描述题，是意图题。</p>
     </div>
   </div>
 </section>
@@ -357,7 +386,7 @@
     var art = document.getElementById('binaryArt');
     var canvas = document.getElementById('bitCanvas');
     var handPath = "M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V336c0 1.5 0 3.1 .1 4.6L67.6 283c-16-15.2-41.3-14.6-56.6 1.4s-14.6 41.3 1.4 56.6L124.8 448c43.1 41.1 100.4 64 160 64H304c97.2 0 176-78.8 176-176V128c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V32z";
-    var heartPath = "M288 220 C260 190 210 194 210 232 C210 270 252 298 288 326 C324 298 366 270 366 232 C366 194 316 190 288 220 Z";
+    var heartPath = "M288 320 C288 320 190 256 190 188 C190 140 242 120 288 166 C334 120 386 140 386 188 C386 256 288 320 288 320 Z";
 
     function drawBits(){
       if (!canvas || !art) return;
@@ -388,18 +417,18 @@
         } else {
           mc.save();
           mc.translate(52, 250);
-          mc.translate(102, 102);
-          mc.rotate(16 * Math.PI / 180);
-          mc.translate(-102, -102);
-          mc.scale(0.40, 0.40);
+          mc.translate(97, 138);
+          mc.rotate(30 * Math.PI / 180);
+          mc.translate(-97, -138);
+          mc.scale(0.38, 0.48);
           mc.fill(new Path2D(handPath));
           mc.restore();
           mc.save();
           mc.translate(524, 250);
-          mc.translate(-102, 102);
-          mc.rotate(-16 * Math.PI / 180);
-          mc.translate(102, -102);
-          mc.scale(-0.40, 0.40);
+          mc.translate(-97, 138);
+          mc.rotate(-30 * Math.PI / 180);
+          mc.translate(97, -138);
+          mc.scale(-0.38, 0.48);
           mc.fill(new Path2D(handPath));
           mc.restore();
         }
@@ -424,8 +453,7 @@
         for (var r = 0; r < rows; r++) {
           for (var c = 0; c < cols; c++) {
             if (!edge(inside, r, c)) continue;
-            if (red) ctx.fillStyle = (r + c) % 2 ? '#D94A38' : '#B93A2E';
-            else ctx.fillStyle = (r + c) % 2 ? '#F1F1EE' : '#9A9A9A';
+            ctx.fillStyle = red ? '#C0392B' : '#E8E8E6';
             ctx.fillText((r + c) % 2 ? '0' : '1', (c + 0.5) * cell, (r + 0.5) * cell);
           }
         }
