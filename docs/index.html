@@ -110,11 +110,8 @@
   .binary{position:relative;background:#0D0D0D;color:#F3F3F1;overflow:hidden;
           min-height:62vh;display:flex;align-items:center;padding:58px 0}
   .binary .wrap{width:100%}
-  .binary-art{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease;
-              max-width:860px;margin:0 auto}
-  .binary-art.in{opacity:1;transform:none}
-  .binary-art svg{display:block;width:100%;height:auto;margin:0 auto}
-  .binary-art .heart-glow{filter:drop-shadow(0 0 22px rgba(185,58,46,.28))}
+  .binary-art{opacity:0;transform:translateY(60px);max-width:860px;margin:0 auto;will-change:transform,opacity}
+  .binary-art canvas{display:block;width:100%;height:auto;margin:0 auto;filter:drop-shadow(0 0 18px rgba(185,58,46,.14))}
 
   .use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--ink);padding-top:22px}
   .use-col h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;margin:0 0 6px}
@@ -286,27 +283,8 @@
 <section class="binary" id="binary">
   <div class="wrap">
     <div class="binary-art" id="binaryArt">
-      <svg viewBox="0 0 32 24" role="img" aria-label="用 0 和 1 画出的手，捧起一颗红色的心">
-        <defs>
-          <path id="f1" d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5"/>
-          <path id="f2" d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5"/>
-          <path id="f3" d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5"/>
-          <path id="f4" d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"/>
-          <path id="heartPath" d="M16 7 C16 7 11 4 11 1.5 C11 -0.5 14 -0.5 16 2 C18 -0.5 21 -0.5 21 1.5 C21 4 16 7 16 7 Z"/>
-        </defs>
-        <g transform="translate(7,6) scale(0.75)" fill="none" stroke="#2A2A2A" stroke-width="0.10" stroke-linecap="round" stroke-linejoin="round">
-          <use href="#f1"/><use href="#f2"/><use href="#f3"/><use href="#f4"/>
-        </g>
-        <g transform="translate(7,6) scale(0.75)">
-          <text font-family="monospace" font-size="0.78" letter-spacing="0.00" fill="#E8E8E6" dominant-baseline="middle"><textPath href="#f1" startOffset="0">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</textPath></text>
-          <text font-family="monospace" font-size="0.78" letter-spacing="0.00" fill="#E8E8E6" dominant-baseline="middle"><textPath href="#f2" startOffset="0">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</textPath></text>
-          <text font-family="monospace" font-size="0.78" letter-spacing="0.00" fill="#E8E8E6" dominant-baseline="middle"><textPath href="#f3" startOffset="0">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</textPath></text>
-          <text font-family="monospace" font-size="0.78" letter-spacing="0.00" fill="#E8E8E6" dominant-baseline="middle"><textPath href="#f4" startOffset="0">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</textPath></text>
-        </g>
-        <g transform="translate(7,6) scale(0.75)">
-          <text class="heart-glow" font-family="monospace" font-size="0.78" letter-spacing="0.00" fill="#B93A2E" dominant-baseline="middle"><textPath href="#heartPath" startOffset="0">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</textPath></text>
-        </g>
-      </svg>
+      <!-- Hand silhouette adapted from Font Awesome Free (CC BY 4.0). -->
+      <canvas id="bitCanvas" role="img" aria-label="用 0 和 1 画出的手，捧起一颗红色的心"></canvas>
     </div>
   </div>
 </section>
@@ -377,14 +355,100 @@
     update();
 
     var art = document.getElementById('binaryArt');
-    if (art && 'IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if (e.isIntersecting) { art.classList.add('in'); io.disconnect(); } });
-      }, {threshold: 0.25});
-      io.observe(art);
-    } else if (art) {
-      art.classList.add('in');
+    var canvas = document.getElementById('bitCanvas');
+    var handPath = "M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V336c0 1.5 0 3.1 .1 4.6L67.6 283c-16-15.2-41.3-14.6-56.6 1.4s-14.6 41.3 1.4 56.6L124.8 448c43.1 41.1 100.4 64 160 64H304c97.2 0 176-78.8 176-176V128c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V32z";
+    var heartPath = "M288 220 C260 190 210 194 210 232 C210 270 252 298 288 326 C324 298 366 270 366 232 C366 194 316 190 288 220 Z";
+
+    function drawBits(){
+      if (!canvas || !art) return;
+      var cssW = Math.max(240, Math.min(art.clientWidth || 860, 860));
+      var cssH = cssW * (512 / 576);
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssH + 'px';
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      var cell = cssW < 520 ? 6 : 9;
+      var cols = Math.floor(cssW / cell);
+      var rows = Math.floor(cssH / cell);
+
+      function maskFor(kind){
+        var m = document.createElement('canvas');
+        m.width = cols;
+        m.height = rows;
+        var mc = m.getContext('2d');
+        mc.setTransform(cols / 576, 0, 0, rows / 512, 0, 0);
+        mc.fillStyle = '#fff';
+        if (kind === 'heart') {
+          mc.fill(new Path2D(heartPath));
+        } else {
+          mc.save();
+          mc.translate(52, 250);
+          mc.translate(102, 102);
+          mc.rotate(16 * Math.PI / 180);
+          mc.translate(-102, -102);
+          mc.scale(0.40, 0.40);
+          mc.fill(new Path2D(handPath));
+          mc.restore();
+          mc.save();
+          mc.translate(524, 250);
+          mc.translate(-102, 102);
+          mc.rotate(-16 * Math.PI / 180);
+          mc.translate(102, -102);
+          mc.scale(-0.40, 0.40);
+          mc.fill(new Path2D(handPath));
+          mc.restore();
+        }
+        var data = mc.getImageData(0, 0, cols, rows).data;
+        return function(r, c){
+          return r >= 0 && r < rows && c >= 0 && c < cols && data[(r * cols + c) * 4 + 3] > 80;
+        };
+      }
+
+      var handInside = maskFor('hand');
+      var heartInside = maskFor('heart');
+
+      ctx.font = Math.max(7, Math.floor(cell * 1.02)) + 'px "SFMono-Regular",Consolas,monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      function edge(inside, r, c){
+        return inside(r, c) && (!inside(r - 1, c) || !inside(r + 1, c) || !inside(r, c - 1) || !inside(r, c + 1));
+      }
+
+      function paint(inside, red){
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            if (!edge(inside, r, c)) continue;
+            if (red) ctx.fillStyle = (r + c) % 2 ? '#D94A38' : '#B93A2E';
+            else ctx.fillStyle = (r + c) % 2 ? '#F1F1EE' : '#9A9A9A';
+            ctx.fillText((r + c) % 2 ? '0' : '1', (c + 0.5) * cell, (r + 0.5) * cell);
+          }
+        }
+      }
+
+      paint(handInside, false);
+      paint(heartInside, true);
     }
+
+    function updateArt(){
+      if (!art) return;
+      var r = document.getElementById('binary').getBoundingClientRect();
+      var vh = window.innerHeight || 1;
+      var p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.86)));
+      art.style.opacity = p;
+      art.style.transform = 'translateY(' + ((1 - p) * 70) + 'px)';
+    }
+
+    drawBits();
+    updateArt();
+    function tick(){ updateArt(); requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+    window.addEventListener('resize', function(){ drawBits(); updateArt(); });
   })();
 </script>
 
