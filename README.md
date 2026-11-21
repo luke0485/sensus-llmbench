@@ -97,7 +97,7 @@ SENSUS 是一套中文多轮对话题库。45 道题，10 类情绪与意图。�
 任何 OpenAI 兼容端点都能用。没有系统提示词。
 
 ```bash
-python eval/run.py --base-url https://api.openai.com/v1 \
+python eval/run.py --base-url <base-url> \
   --model <model> --out runs/model.json
 
 python eval/score.py --run runs/model.json \
