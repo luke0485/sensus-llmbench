@@ -62,4 +62,3 @@ python eval/score.py --run runs/model.json \
 - 不要说“最权威 / 第一 / 唯一”；
 - 不要把它当排行榜，或拿它替代人工评审；
 - 不要承诺“测完就能提升多少分”。
-EOF

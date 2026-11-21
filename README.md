@@ -98,7 +98,7 @@ python eval/run.py --base-url https://api.openai.com/v1 --model gpt-4.1 --out ru
 DeepSeek：
 
 ```bash
-export DEEPSEEK_API_KEY=sk-...
+export OPENAI_API_KEY=sk-...
 python eval/run.py --base-url https://api.deepseek.com/v1 --model deepseek-chat --out runs/deepseek.json
 ```
 
