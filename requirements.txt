@@ -1,0 +1,2 @@
+# Runtime: Python 3.9+, standard library only.
+# Pillow is needed only if you regenerate image assets yourself.

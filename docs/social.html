@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --paper:#F7F4ED; --ink:#1E1D1A; --muted:#6E675F; --line:#E2DCD1; --accent:#B85C3C;
+    --serif:"Iowan Old Style","Palatino Linotype","Songti SC","Noto Serif SC","SimSun",Georgia,serif;
+    --sans:"Helvetica Neue","PingFang SC","Microsoft YaHei","Noto Sans SC",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;width:1280px;height:640px;background:var(--paper);color:var(--ink);
+       font-family:var(--sans);overflow:hidden;position:relative}
+  .frame{position:absolute;inset:34px;border:1px solid var(--line)}
+  .top{display:flex;justify-content:space-between;align-items:baseline;padding:36px 54px 0}
+  .mark{font-family:var(--serif);font-size:24px;letter-spacing:.26em}
+  .meta{font-size:14px;color:var(--muted);letter-spacing:.06em}
+  .body{padding:56px 54px 0}
+  h1{font-family:var(--serif);font-weight:400;font-size:74px;line-height:1.12;
+     letter-spacing:-.02em;margin:0 0 22px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .rule{width:64px;height:2px;background:var(--accent);margin:0 0 24px}
+  p{margin:0;font-size:18px;line-height:1.75;color:#3F3B35;max-width:760px}
+  .foot{position:absolute;left:54px;right:54px;bottom:46px;display:flex;
+        justify-content:space-between;align-items:baseline;font-size:14px;color:var(--muted)}
+  .foot b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="top">
+    <div class="mark">SENSUS</div>
+    <div class="meta">大模型情绪与意图转弯测试题库 · v1.0.0</div>
+  </div>
+  <div class="body">
+    <h1>模型有没有接住<br><em>那句话里的转弯</em></h1>
+    <div class="rule"></div>
+    <p>多轮对话里，情绪和意图拐了一个弯。模型只写下一句——评分看它有没有跟上，而不是有没有给建议。</p>
+  </div>
+  <div class="foot">
+    <div><b>45</b> 道 · <b>10</b> 类转弯 · 不做总分与排名</div>
+    <div>github.com/your-org/sensus-bench</div>
+  </div>
+</body>
+</html>
