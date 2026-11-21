@@ -140,7 +140,7 @@ python eval/compare.py --old results/v1.json --new results/v2.json --out compare
 
 仓库自带静态页：`docs/index.html`（无构建、无依赖）。
 
-1. 把 `docs/index.html`、`docs/social.html` 里的 `your-org` 换成你的 GitHub 用户名。
+1. 仓库链接已按 `luke0485` 填好；如果你的 GitHub 用户名不同，改 `docs/index.html` 和 `docs/for-labs.md` 里的两处。
 2. Settings → Pages → Source: Deploy from a branch → `main` → `/docs`。
 3. Settings → Social preview → 上传 `docs/images/social.png`（1280×640）。
 

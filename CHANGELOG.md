@@ -11,3 +11,4 @@
   - 同一批 reasoner 回答，换 judge 相差约 0.14 分
 - 冻结规则：不再修改 `data/items.jsonl`；任何改动进入 1.1.0，并重跑校准
 - 仓库结构：`data/`（JSONL + JSON Schema + 图片）、`eval/`（运行/评分/导出/对比/统计）、`docs/`；不再包含逐题 txt/md
+- 发布材料：README 截图、GitHub Pages 落地页、1280×640 社交预览图
