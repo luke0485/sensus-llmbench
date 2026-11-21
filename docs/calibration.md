@@ -36,7 +36,7 @@
 代码能力升级后，人文对话有没有掉：
 
 ```bash
-python eval/compare.py --old results/v1.json --new results/v2.json --out compare/
+python eval/compare.py --old results/old.json --new results/new.json --out compare/
 ```
 
 只看两件事：哪一类退了、哪几题退了。不看总分。
@@ -47,7 +47,7 @@ python eval/compare.py --old results/v1.json --new results/v2.json --out compare
 
 ```bash
 # OpenAI
-python eval/run.py --base-url https://api.openai.com/v1 --model gpt-4.1 --out runs/gpt.json
+python eval/run.py --base-url https://api.openai.com/v1 --model <model> --out runs/gpt.json
 
 # DeepSeek
 python eval/run.py --base-url https://api.deepseek.com/v1 --model deepseek-chat --out runs/ds.json

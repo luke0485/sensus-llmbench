@@ -21,7 +21,7 @@
       ]
     },
     "version": { "type": "string" },
-    "bank_version": { "type": "string", "const": "1.0.0" },
+    "bank_version": { "type": "string", "const": "release" },
     "status": { "enum": ["stable", "provisional"] },
     "scene": { "type": "string", "minLength": 4 },
     "history": { "type": "array", "items": { "type": "string" }, "minItems": 2 },

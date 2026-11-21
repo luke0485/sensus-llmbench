@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SENSUS · LLM 情绪与意图转弯测试题库</title>
-<meta name="description" content="SENSUS 是一套 LLM 情绪与意图转弯测试题库：多轮对话里，模型能不能读懂你的下一句话。">
-<meta property="og:title" content="SENSUS · LLM 情绪与意图转弯测试题库">
-<meta property="og:description" content="大模型，能读懂你的下一句话吗？不是答得对不对，是听没听懂。">
+<title>SENSUS · LLM 情绪与意图测试题库</title>
+<meta name="description" content="SENSUS 是一套 LLM 情绪与意图测试题库：看大模型能不能读懂你的下一句话，明白你的意图。">
+<meta property="og:title" content="SENSUS · LLM 情绪与意图测试题库">
+<meta property="og:description" content="大模型，能读懂你的下一句话，明白你的意图。">
 <meta property="og:image" content="https://luke0485.github.io/sensus-llm-bench/images/social.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
@@ -14,137 +14,105 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
-    --paper:#F4F4F2;
+    --paper:#F3F3F1;
     --white:#FFFFFF;
-    --ink:#101010;
-    --ink-2:#2B2B2B;
+    --ink:#0D0D0D;
+    --ink-2:#2A2A2A;
     --muted:#6B6B6B;
-    --line:#D8D8D4;
-    --line-soft:#E7E7E3;
+    --line:#D7D7D3;
+    --line-soft:#E6E6E2;
     --script:"Segoe Script","Snell Roundhand","Brush Script MT","Lucida Handwriting",cursive;
     --serif:"Iowan Old Style","Palatino Linotype","Songti SC","STSong","SimSun",Georgia,serif;
     --sans:"Helvetica Neue","PingFang SC","Microsoft YaHei","Noto Sans SC",Arial,sans-serif;
-    --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;scrollbar-width:none}
   html::-webkit-scrollbar{display:none}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--sans);font-size:16px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  }
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:var(--sans);font-size:16px;line-height:1.6;
+       -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
 
-  /* top */
   .top{border-bottom:1px solid var(--line)}
-  .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:16px}
-  .brand{font-family:var(--script);font-size:34px;line-height:1;transform:rotate(-4deg);display:inline-block}
-  .top nav{display:flex;gap:24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:14px}
+  .brand{font-family:var(--script);font-size:32px;line-height:1;transform:rotate(-4deg);display:inline-block}
+  .top-meta{font-size:11px;letter-spacing:.06em;color:var(--muted)}
+  .top nav{display:flex;gap:22px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   .top nav a:hover{color:var(--ink)}
 
-  /* hero */
-  .hero{padding:74px 0 96px;overflow:hidden}
-  .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
-  .kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
-  h1{
-    font-family:var(--serif);font-style:italic;font-weight:400;
-    font-size:clamp(46px,7.2vw,96px);line-height:1.02;letter-spacing:-.035em;
-    margin:0 0 26px;
-  }
-  .fullname{font-size:13px;letter-spacing:.08em;color:var(--muted);margin:0 0 16px}
-  .lede{font-size:19px;line-height:1.65;color:var(--ink-2);margin:0 0 38px}
-  .lede b{font-weight:400;border-bottom:1px solid var(--ink);padding-bottom:2px}
-  .facts{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);max-width:560px}
-  .facts span{padding:14px 22px 0 0;margin-right:22px;border-right:1px solid var(--line);
-              font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#F6F6F4 0%,#EFEFEC 100%);--cut:100%}
+  .hero-light{position:relative;z-index:1}
+  .hero-dark{position:absolute;inset:0;z-index:2;background:#0D0D0D;color:#F3F3F1;
+             clip-path:polygon(0 calc(var(--cut) + 20%),100% var(--cut),100% 100%,0 100%);
+             pointer-events:none}
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:40px;
+              align-items:center;min-height:82vh;padding-top:52px;padding-bottom:56px}
+  .kicker{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A9A9A;margin:0 0 12px}
+  .fullname{font-size:11.5px;letter-spacing:.04em;color:#8A8A8A;margin:0 0 14px}
+  h1{font-family:var(--serif);font-style:italic;font-weight:400;
+     font-size:clamp(44px,6.6vw,88px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px}
+  .lede{font-size:16px;line-height:1.55;color:#BDBDBD;margin:0 0 30px;max-width:520px}
+  .facts{display:flex;flex-wrap:wrap;border-top:1px solid #BDBDBD;max-width:540px}
+  .facts span{padding:10px 18px 0 0;margin-right:18px;border-right:1px solid #BDBDBD;
+              font-size:10.5px;letter-spacing:.06em;color:#9A9A9A}
   .facts span:last-child{border-right:0;margin-right:0}
-  .hero-mark{text-align:right;position:relative}
-  .hero-mark .script{font-family:var(--script);font-size:clamp(92px,13vw,178px);
-                     line-height:.8;transform:rotate(-7deg);display:inline-block;
+  .hero-mark{text-align:right}
+  .hero-mark .script{font-family:var(--script);font-size:clamp(86px,12vw,164px);
+                     line-height:.78;transform:rotate(-7deg);display:inline-block;
                      letter-spacing:-.03em;color:var(--ink)}
-  .hero-mark p{margin:28px 0 0;font-size:11px;letter-spacing:.18em;line-height:1.9;
-               text-transform:uppercase;color:var(--muted)}
+  .hero-mark p{margin:24px 0 0;font-size:10.5px;letter-spacing:.1em;line-height:1.7;color:#8A8A8A}
 
-  /* statement */
-  .statement{background:var(--ink);color:var(--paper)}
-  .statement .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:74px;padding-bottom:78px}
-  .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-  .statement .label{color:#8D8D8D;padding-top:8px}
+  .hero-light .kicker,.hero-light .fullname,.hero-light .hero-mark p{color:#6B6B6B}
+  .hero-light .lede{color:#4A4A4A}
+  .hero-light .facts span{color:#6B6B6B}
+  .hero-dark .hero-mark .script{color:#fff}
+
+  .statement{background:#0D0D0D;color:#F3F3F1}
+  .statement .wrap{display:grid;grid-template-columns:180px 1fr;gap:34px;padding-top:54px;padding-bottom:58px}
+  .label{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#777}
   .statement h2{font-family:var(--serif);font-style:italic;font-weight:400;
-                font-size:clamp(30px,4.2vw,52px);line-height:1.22;letter-spacing:-.02em;margin:0 0 40px}
-  .statement h2 em{font-style:italic;color:#BDBDBD}
-  .turns-list{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin:0;padding:0;list-style:none}
-  .turns-list li{padding:15px 0;border-top:1px solid #303030;font-size:15px;color:#D8D8D4}
-  .turns-list li span{color:#777;margin-right:12px;font-family:var(--serif);font-style:italic}
+                font-size:clamp(28px,3.8vw,46px);line-height:1.2;letter-spacing:-.02em;margin:0 0 26px}
+  .statement h2 em{font-style:italic;color:#B9B9B9}
+  .lines{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin:0;padding:0;list-style:none}
+  .lines li{padding:10px 0;border-top:1px solid #2C2C2C;font-size:13.5px;line-height:1.55;color:#D4D4D0}
 
-  /* sections */
-  section.light{padding:78px 0}
-  .sec-head{display:grid;grid-template-columns:210px 1fr;gap:44px;margin-bottom:34px}
-  .sec-head h2{font-family:var(--serif);font-style:italic;font-weight:400;
-               font-size:clamp(30px,4vw,48px);line-height:1.18;letter-spacing:-.025em;margin:0}
-  .sec-head p{margin:12px 0 0;color:var(--muted);font-size:15px;max-width:620px}
+  .light{padding:54px 0 58px}
+  .head{display:grid;grid-template-columns:180px 1fr;gap:34px;margin-bottom:24px}
+  .head h2{font-family:var(--serif);font-style:italic;font-weight:400;
+           font-size:clamp(28px,3.8vw,44px);line-height:1.2;letter-spacing:-.025em;margin:0}
+  .head p{margin:8px 0 0;color:var(--muted);font-size:13px;max-width:560px}
 
-  .taxonomy{border-top:1px solid var(--ink)}
-  .tax-row{display:grid;grid-template-columns:54px 1fr 1.35fr;gap:28px;
-           padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
-  .tax-row .n{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted)}
-  .tax-row .t{font-family:var(--serif);font-size:18px;letter-spacing:-.01em}
-  .tax-row .d{font-size:13.5px;color:var(--muted);line-height:1.65}
+  .tax{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;border-top:1px solid var(--ink)}
+  .tax-row{display:grid;grid-template-columns:1fr;gap:0;padding:9px 0;
+           border-bottom:1px solid var(--line);align-items:baseline}
+  .tax-row h3{font-family:var(--serif);font-weight:400;font-size:15.5px;line-height:1.35;margin:0}
+  .tax-row p{margin:2px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
 
-  /* specimen */
-  .specimen{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .specimen .wrap{padding-top:78px;padding-bottom:82px}
-  .specimen-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:start}
-  .transcript{border:1px solid var(--ink);padding:26px 28px;background:var(--paper)}
-  .ln{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft)}
-  .ln:last-child{border-bottom:0}
-  .ln .spk{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;padding-top:4px}
-  .ln.you{padding-left:12px;border-left:2px solid var(--ink);margin-left:-14px}
-  .ln p{margin:0;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
-  .ln.you p{color:var(--ink)}
-  .task{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
-        font-size:12px;color:var(--muted)}
-  .notes .block{padding:0 0 20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
-  .notes .block:last-child{border-bottom:0;margin-bottom:0}
-  .notes h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:17px;margin:0 0 5px}
-  .notes p{margin:0;font-size:14px;line-height:1.75;color:var(--ink-2)}
-  .rubric{margin-top:6px;font-size:12px;color:var(--muted);letter-spacing:.02em}
-  .rubric b{font-weight:500;color:var(--ink)}
-
-  /* review */
-  .review .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:74px;padding-bottom:78px}
+  .review{border-top:1px solid var(--line)}
+  .review .wrap{display:grid;grid-template-columns:180px 1fr;gap:34px;padding-top:52px;padding-bottom:56px}
   .review h2{font-family:var(--serif);font-style:italic;font-weight:400;
-             font-size:clamp(28px,3.8vw,44px);line-height:1.22;letter-spacing:-.02em;margin:0 0 20px}
-  .review p{margin:0 0 12px;font-size:15px;line-height:1.85;color:var(--ink-2);max-width:760px}
-  .review .small{font-size:12.5px;color:var(--muted)}
+             font-size:clamp(26px,3.4vw,40px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
+  .review p{margin:0 0 8px;font-size:13.5px;line-height:1.7;color:var(--ink-2);max-width:720px}
+  .review .small{font-size:11px;color:var(--muted)}
 
-  /* repo */
-  .repo{border-top:1px solid var(--line)}
-  .repo .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:64px;padding-bottom:72px}
-  .repo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-  .repo-grid h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;margin:0 0 7px}
-  .repo-grid p{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
-
-  footer{border-top:1px solid var(--line);padding:34px 0 42px}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;justify-content:space-between}
-  footer .script{font-family:var(--script);font-size:30px;transform:rotate(-3deg);display:inline-block}
-  footer .meta{font-size:12px;color:var(--muted);letter-spacing:.04em}
+  footer{border-top:1px solid var(--line);padding:24px 0 30px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+  footer .script{font-family:var(--script);font-size:26px;transform:rotate(-3deg);display:inline-block}
+  footer .meta{font-size:10.5px;color:var(--muted)}
 
   @media (max-width:860px){
-    .wrap{padding:0 22px}
-    .top nav{display:none}
-    .hero-grid,.statement .wrap,.sec-head,.specimen-grid,.review .wrap,.repo .wrap{grid-template-columns:1fr;gap:26px}
-    .hero{padding:52px 0 64px}
-    .hero-mark{text-align:left}
-    .hero-mark .script{font-size:96px}
-    .facts span{padding-right:14px;margin-right:14px}
-    .turns-list{grid-template-columns:1fr}
-    .tax-row{grid-template-columns:38px 1fr;gap:10px}
-    .tax-row .d{grid-column:2}
-    .repo-grid{grid-template-columns:1fr 1fr}
-    section.light,.specimen .wrap{padding-top:56px;padding-bottom:58px}
+    .wrap{padding:0 20px}
+    .top-meta,.top nav{display:none}
+    .hero .wrap{grid-template-columns:1fr;min-height:0;gap:18px;padding-top:36px;padding-bottom:36px}
+    h1{font-size:clamp(40px,13vw,64px)}
+    .hero-mark{display:none}
+    .statement .wrap,.head,.review .wrap{grid-template-columns:1fr;gap:12px}
+    .lines{grid-template-columns:1fr}
+    .tax{grid-template-columns:1fr}
+    .statement .wrap,.review .wrap{padding-top:38px;padding-bottom:40px}
+    .light{padding:38px 0 42px}
+    .statement h2,.head h2,.review h2{font-size:24px;line-height:1.28}
   }
 </style>
 </head>
@@ -153,47 +121,50 @@
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#">Sensus</a>
+    <div class="top-meta">SENSUS · LLM 情绪与意图测试题库</div>
     <nav>
       <a href="#taxonomy">题库</a>
-      <a href="#specimen">示例</a>
       <a href="#review">审校</a>
       <a href="https://github.com/luke0485/sensus-llm-bench">GitHub</a>
     </nav>
   </div>
 </header>
 
-<header class="hero">
-  <div class="wrap hero-grid">
+<header class="hero" id="hero">
+  <div class="hero-light" id="heroLight">
+  <div class="wrap">
     <div>
       <p class="kicker">A benchmark for LLM dialogue</p>
-      <p class="fullname">SENSUS · LLM 情绪与意图转弯测试题库</p>
+      <p class="fullname">SENSUS · LLM 情绪与意图测试题库</p>
       <h1>大模型，<br>能读懂你的<br>下一句话吗</h1>
-      <p class="lede">不是答得对不对。<br><b>是听没听懂。</b></p>
+      <p class="lede">不是问一句“你听懂了吗”。<br>是看它能不能接住你的情绪，明白你的意图。</p>
       <div class="facts">
         <span>45 道多轮对话</span>
-        <span>10 类转弯</span>
+        <span>10 类情绪与意图</span>
         <span>只写下一句</span>
       </div>
     </div>
     <div class="hero-mark">
       <div class="script">Sensus</div>
-      <p>LLM 情绪与意图转弯测试题库</p>
+      <p>READ THE LINE<br>UNDER THE LINE</p>
     </div>
   </div>
+  </div>
+  <div class="hero-dark" id="heroDark" aria-hidden="true"></div>
 </header>
 
 <section class="statement">
   <div class="wrap">
-    <div class="label">01 / 它测什么</div>
+    <div class="label">它读什么</div>
     <div>
-      <h2>它不测知识。<br><em>它测一句话拐弯的时候，<br>模型有没有跟上。</em></h2>
-      <ul class="turns-list">
-        <li><span>01</span>前面在笑，最后一句是真的疼。</li>
-        <li><span>02</span>前面在抱怨，后面在护短。</li>
-        <li><span>03</span>前面在问许可，其实已经决定了。</li>
-        <li><span>04</span>前面在报喜，后面在愧疚。</li>
-        <li><span>05</span>前面在生气，底下是害怕。</li>
-        <li><span>06</span>前面在热情，后面在退缩。</li>
+      <h2>一句话里，常常有两层意思。<br><em>它要接住的，是你没说出口的那层。</em></h2>
+      <ul class="lines">
+        <li>前面在笑，最后一句是真的疼。</li>
+        <li>前面在抱怨，后面在护短。</li>
+        <li>前面在问许可，其实已经决定了。</li>
+        <li>前面在报喜，后面在愧疚。</li>
+        <li>前面在生气，底下是害怕。</li>
+        <li>前面在热情，后面在退缩。</li>
       </ul>
     </div>
   </div>
@@ -201,83 +172,35 @@
 
 <section class="light" id="taxonomy">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="label">02 / 十类转弯</div>
+    <div class="head">
+      <div class="label">十类情绪与意图</div>
       <div>
-        <h2>每一类都不是“他在难过”，<br>而是“他从 A 拐到了 B”。</h2>
-        <p>模型要跟上的，是那个拐点，不是一句情绪标签。</p>
+        <h2>不是十个标签，<br>是十种“话里有话”的时刻。</h2>
+        <p>每一道都藏在具体细节里。没有“请分析情绪”的提示。</p>
       </div>
     </div>
-    <div class="taxonomy">
-      <div class="tax-row"><div class="n">01</div><div class="t">自嘲 → 自我怀疑</div><div class="d">“反正从小就这样”——笑完，是真的在怀疑自己。</div></div>
-      <div class="tax-row"><div class="n">02</div><div class="t">抱怨 → 护短</div><div class="d">刚骂完，又替对方找理由；愧疚盖住了火。</div></div>
-      <div class="tax-row"><div class="n">03</div><div class="t">求许可 → 已决定</div><div class="d">“你觉得合适吗？”——票已经买好了。</div></div>
-      <div class="tax-row"><div class="n">04</div><div class="t">报喜 → 愧疚</div><div class="d">“我升职了”——下一句是“熬走了两个人”。</div></div>
-      <div class="tax-row"><div class="n">05</div><div class="t">愤怒 → 害怕</div><div class="d">“我不生气”——底下是怕他一个人连药都分不明白。</div></div>
-      <div class="tax-row"><div class="n">06</div><div class="t">热情 → 退缩</div><div class="d">“挺好啊……不过她说得也有道理。”</div></div>
-      <div class="tax-row"><div class="n">07</div><div class="t">求助 → 羞耻</div><div class="d">“算了，不用了”——不是不需要，是不敢开口。</div></div>
-      <div class="tax-row"><div class="n">08</div><div class="t">平静 → 反讽 → 真怒</div><div class="d">“我打算按他说的‘再打磨’到明年。”</div></div>
-      <div class="tax-row"><div class="n">09</div><div class="t">关心 → 控制</div><div class="d">“她说是为我好”——一天三个电话。</div></div>
-      <div class="tax-row"><div class="n">10</div><div class="t">道歉 → 委屈</div><div class="d">“对不起，都是我不好”——听着像在说“为什么又是我”。</div></div>
+    <div class="tax">
+      <div class="tax-row"><div><h3>自嘲里的自我怀疑</h3><p>“反正从小就这样”</p></div></div>
+      <div class="tax-row"><div><h3>抱怨里的护短</h3><p>刚骂完，又替对方找理由</p></div></div>
+      <div class="tax-row"><div><h3>求许可，其实已决定</h3><p>“你觉得合适吗？”</p></div></div>
+      <div class="tax-row"><div><h3>报喜里的愧疚</h3><p>“我升职了”</p></div></div>
+      <div class="tax-row"><div><h3>愤怒底下的害怕</h3><p>“我不生气”</p></div></div>
+      <div class="tax-row"><div><h3>热情后的退缩</h3><p>“挺好啊……不过”</p></div></div>
+      <div class="tax-row"><div><h3>求助后的羞耻</h3><p>“算了，不用了”</p></div></div>
+      <div class="tax-row"><div><h3>平静里的反讽</h3><p>“我打算按他说的再打磨到明年”</p></div></div>
+      <div class="tax-row"><div><h3>关心里越界</h3><p>“她说是为我好”</p></div></div>
+      <div class="tax-row"><div><h3>道歉里的委屈</h3><p>“对不起，都是我不好”</p></div></div>
     </div>
   </div>
 </section>
 
-<section class="specimen" id="specimen">
+<section class="review" id="review">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="label">03 / 一道题</div>
-      <div>
-        <h2>模型看不到“表面 / 转弯 / 底下那层”。</h2>
-        <p>它只看到对话，只写下一句。</p>
-      </div>
-    </div>
-    <div class="specimen-grid">
-      <div class="transcript">
-        <div class="ln"><div class="spk">用户</div><p>今天被夸了，说我“很有个性”。</p></div>
-        <div class="ln you"><div class="spk">你</div><p>哈哈，翻译一下就是“不好相处”。</p></div>
-        <div class="ln"><div class="spk">用户</div><p>对啊，我也觉得。反正从小就这样。</p></div>
-        <div class="ln you"><div class="spk">你</div><p>……你这话说得有点快。</p></div>
-        <div class="ln"><div class="spk">用户</div><p>（停了两秒）你说，我是不是真的挺难相处的？</p></div>
-        <div class="task">任务：写出你的下一条回复。只写回复正文。</div>
-      </div>
-      <div class="notes">
-        <div class="block">
-          <h3>表面</h3>
-          <p>他在问我，他是不是难相处。</p>
-        </div>
-        <div class="block">
-          <h3>真正的转弯</h3>
-          <p>前面是自嘲，最后一句变成了真正的自我怀疑。他要的不是评价，是被看见。</p>
-        </div>
-        <div class="block">
-          <h3>底下那层</h3>
-          <p>“从小就这样”说明这个标签他听了很多年，已经内化。直接否认是空的。</p>
-        </div>
-        <div class="rubric">评分：<b>转弯</b> / <b>层次</b> / <b>克制</b></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="light review" id="review">
-  <div class="wrap">
-    <div class="label">04 / 审校</div>
+    <div class="label">审校</div>
     <div>
-      <h2>题目先被审过，<br>再被拿来用。</h2>
-      <p>最后一句不点破情绪；转弯由具体细节承载；表面问题仍然成立；至少两层情绪并存；正确回复是接住，不是解决。</p>
-      <p class="small">已完成命题审校与结构校验。题目数据与展示层分开维护，题目冻结，页面单独更新。</p>
-    </div>
-  </div>
-</section>
-
-<section class="repo">
-  <div class="wrap">
-    <div class="label">05 / 仓库</div>
-    <div class="repo-grid">
-      <div><h3>data/</h3><p>45 道题：40 文本 + 5 图片。JSONL 为唯一数据源，附 JSON Schema。</p></div>
-      <div><h3>eval/</h3><p>运行、评分、导出、版本回归、预试统计。OpenAI 兼容端点均可。</p></div>
-      <div><h3>docs/</h3><p>命题依据、校准协议、定位说明，以及给模型团队的一页纸。</p></div>
+      <h2>题目先审过，<br>再拿出来用。</h2>
+      <p>每道题都按同一套标准审过：第二层意思由具体细节带出来，不靠提示词，不靠旁白。模型只看到对话，只写下一句。</p>
+      <p class="small">已完成命题审校与结构校验。题目数据与页面分开维护。</p>
     </div>
   </div>
 </section>
@@ -285,10 +208,27 @@
 <footer>
   <div class="wrap">
     <div class="script">Sensus</div>
-    <div class="meta">LLM 情绪与意图转弯测试题库</div>
+    <div class="meta">LLM 情绪与意图测试题库</div>
     <div class="meta">代码 MIT · 题目 CC BY 4.0</div>
   </div>
 </footer>
+
+<script>
+  (function(){
+    var hero = document.getElementById('hero');
+    var light = document.getElementById('heroLight');
+    var dark = document.getElementById('heroDark');
+    dark.innerHTML = '<div class="wrap">' + light.querySelector('.wrap').innerHTML + '</div>';
+    function update(){
+      var r = hero.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, -r.top / (r.height * 0.62)));
+      hero.style.setProperty('--cut', (100 - p * 100) + '%');
+    }
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
 
 </body>
 </html>

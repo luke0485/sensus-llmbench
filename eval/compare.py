@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """版本回归：同一套题，比较两个模型版本，看人文对话有没有掉。
 
-    python eval/compare.py --old results/model_v1.json --new results/model_v2.json --out compare/
+    python eval/compare.py --old results/model_old.json --new results/model_new.json --out compare/
 
 输入是 score.py 产出的两份 profile。输出：
   compare/compare.md    按类别 + 逐题的回归报告
