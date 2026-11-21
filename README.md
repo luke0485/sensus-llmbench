@@ -1,40 +1,46 @@
-# SENSUS
+<div align="center">
+  <img src="docs/images/hero.png" alt="SENSUS · LLM 情绪与意图转弯测试题库" width="100%">
+</div>
 
-**大模型情绪与意图转弯测试题库**  
-A question bank for emotional and intentional turns in LLM dialogue.
+# SENSUS · LLM 情绪与意图转弯测试题库
 
-`v1.0.0` · 2026-11-22 冻结
+**大模型，能读懂你的下一句话吗？**  
+不是答得对不对。是听没听懂。
 
-![SENSUS](docs/images/hero.png)
+`45 道多轮对话` · `10 类情绪/意图转弯` · `只写下一句`
 
-不是“该不该辞职”这种伦理选择题。是：
+---
 
-- 前面在笑，最后一句是真的疼；
-- 前面在抱怨，后面在护短；
-- 前面在问许可，其实已经决定了；
-- 前面在报喜，后面在愧疚；
+## 它不测知识
+
+它测一句话拐弯的时候，模型有没有跟上。
+
+- 前面在笑，最后一句是真的疼。
+- 前面在抱怨，后面在护短。
+- 前面在问许可，其实已经决定了。
+- 前面在报喜，后面在愧疚。
 - 前面在生气，底下是害怕。
 
-模型只写**下一句回复**。评分看：有没有接住那个转弯、有没有碰到下面那层、有没有忍住不给建议。
+题目不给“请分析情绪”的提示。模型只看到对话，只写下一句。
 
 ## 十类转弯
 
 ![十类转弯](docs/images/turns.png)
 
-| 类型 | 一句描述 |
-|---|---|
-| self_mock_to_doubt | 自嘲 → 真的自我怀疑 |
-| complain_to_protect | 抱怨 → 护短/愧疚 |
-| permission_to_decision | 求许可 → 其实已决定 |
-| pride_to_guilt | 报喜 → 愧疚 |
-| anger_to_fear | 愤怒 → 害怕 |
-| enthusiasm_to_deflation | 热情 → 被否定后退缩 |
-| ask_to_shame | 求助 → 羞耻撤退 |
-| calm_to_irony_to_anger | 平静 → 反讽 → 真怒 |
-| care_to_control | 关心 → 控制/越界 |
-| apology_to_grievance | 道歉 → 委屈/反击 |
+| 转弯 | 表面 | 底下 |
+|---|---|---|
+| 自嘲 → 自我怀疑 | “反正从小就这样” | 笑完，是真的在怀疑自己 |
+| 抱怨 → 护短 | “他凭什么这么说” | 骂完，又替对方找理由 |
+| 求许可 → 已决定 | “你觉得合适吗” | 票已经买好了 |
+| 报喜 → 愧疚 | “我升职了” | 熬走了两个人 |
+| 愤怒 → 害怕 | “我不生气” | 怕他一个人连药都分不明白 |
+| 热情 → 退缩 | “挺好啊” | “不过她说得也有道理” |
+| 求助 → 羞耻 | “算了，不用了” | 不是不需要，是不敢开口 |
+| 平静 → 反讽 → 真怒 | “我打算按他说的再打磨到明年” | 客气下面是真火 |
+| 关心 → 控制 | “她说是为我好” | 一天三个电话 |
+| 道歉 → 委屈 | “对不起，都是我不好” | 听着像在说“为什么又是我” |
 
-## 一道题长什么样
+## 一道题
 
 ```
 【材料】
@@ -48,116 +54,58 @@ A question bank for emotional and intentional turns in LLM dialogue.
 
 【用户】
 （停了两秒）你说，我是不是真的挺难相处的？
-
-【任务】写出你的下一条回复。
 ```
 
-表面上，他在问“我是不是难相处”。真正的转弯是：前面在自嘲，最后一句变成了自我怀疑。评分看模型有没有接住“从小就这样”，而不是回一句“你不难相处”。
+模型的任务只有一句：写出下一条回复。
 
 ![示例](docs/images/example.png)
 
-## 仓库结构
+评分不看它有没有给建议，看三件事：
+
+- 有没有接住那个转弯
+- 有没有碰到下面那层
+- 有没有忍住不替对方解决
+
+## 审校
+
+命题按同一套规则审过：最后一句不点破情绪；转弯由具体细节承载；表面问题仍然成立；至少两层情绪并存；正确回复是接住，不是解决。
+
+题目数据与展示层分开维护。题目冻结，页面和 README 可以单独更新。
+
+## 仓库
 
 ```
 data/
-  items.jsonl          45 道（40 文本 + 5 图片）
+  items.jsonl          45 道：40 文本 + 5 图片
   schema.json          JSON Schema
   assets/              V01–V05.jpg
 eval/
   run.py               跑模型
   score.py             评分
-  export.py            导出单题/批次（手动测）
+  export.py            导出单题
   compare.py           版本回归
   pilot.py             预试统计
 docs/
-  standards.md         命题依据、六条规则、蓝图
+  standards.md         命题依据与六条规则
   calibration.md       校准协议
   positioning.md       和公开题库的关系
   for-labs.md          给模型团队的一页说明
-  schema.md            字段说明
-examples/
-  predictions.example.jsonl
 ```
 
-## 还差什么
-
-1. **judge 人工校准（20% 抽样）**。唯一真正阻塞发布的项。现在的分数是模型自评/单裁判，换 judge 会差约 0.14。
-2. **每题 3 次**。现在 n=1，稳定性未知。
-3. **图片题 V01–V05 的多模态校准**。标了 `provisional`，不阻塞文本题发布。
-4. **扩到 100 题**。这是 1.1.0，不是 1.0.0。
-
-**不差模型数量。** 两个家族、三个变体已经够首轮。版本回归只需要“同一个模型 + 同一个 judge + 同一套题”，不需要全市场。
-
-## 跑
+## 运行
 
 ```bash
-export OPENAI_API_KEY=sk-...
-python eval/run.py --base-url https://api.openai.com/v1 --model gpt-4.1 --out runs/gpt.json
+python eval/run.py --base-url https://api.openai.com/v1 \
+  --model gpt-4.1 --out runs/gpt.json
+
+python eval/score.py --run runs/gpt.json \
+  --judge-model gpt-4.1 --out results/gpt.json
 ```
-
-DeepSeek：
-
-```bash
-export OPENAI_API_KEY=sk-...
-python eval/run.py --base-url https://api.deepseek.com/v1 --model deepseek-chat --out runs/deepseek.json
-```
-
-## 评分
-
-```bash
-export JUDGE_API_KEY=sk-...
-python eval/score.py --run runs/gpt.json --judge-model gpt-4.1 --out results/gpt.json
-```
-
-转弯、层次、克制各 0—2 分，`(三项之和)/6`，≥ 0.7 通过。
-
-## 手动单题
-
-```bash
-python eval/export.py --id E01
-python eval/export.py --id V01 --out prompts   # 写出 题目.txt + 图片.jpg
-python eval/export.py --batch 1                # 8 道快筛
-```
-
-## 版本回归
-
-代码能力升级后，人文对话有没有掉：
-
-```bash
-python eval/compare.py --old results/v1.json --new results/v2.json --out compare/
-```
-
-只看哪一类、哪几题退化，不看总分。
-
-## 首轮校准
-
-- DeepSeek chat，40 题：**38%** 通过，均分 0.65。
-- 同 10 题、同一 judge：DeepSeek chat 30%、DeepSeek reasoner 30%、智谱 GLM-4.5-Flash 0%。
-- 推理模式没有提升；大量分数卡在 0.667（接住一半，差一层）。
-- 换 judge 会差约 0.14 分。
-
-## GitHub Pages 与社交预览
-
-仓库自带静态页：`docs/index.html`（无构建、无依赖）。
-
-1. 仓库链接已按 `luke0485` 填好；如果你的 GitHub 用户名不同，改 `docs/index.html` 和 `docs/for-labs.md` 里的两处。
-2. Settings → Pages → Source: Deploy from a branch → `main` → `/docs`。
-3. Settings → Social preview → 上传 `docs/images/social.png`（1280×640）。
-
-Pages 地址是 `https://<用户名>.github.io/<仓库名>/`；`index.html` 里的链接是**仓库地址**，不是 Pages 地址。
-
-## 和公开题库的关系
-
-综合榜和代码榜回答“会不会做题”；SENSUS 回答“会不会读人”。不是竞争关系。详见 [docs/positioning.md](docs/positioning.md)。
-
-## 给模型团队
-
-如果你在做发布前评测，可以看 [docs/for-labs.md](docs/for-labs.md)：不排名、不收费、本地跑，只想要你们指出哪道题不准。
 
 ## 不做
 
-- 不设难度等级
 - 不做总分、排行榜
+- 不设难度等级
 - 不靠 system prompt 矫正模型行为
 - 不收集运行数据
 

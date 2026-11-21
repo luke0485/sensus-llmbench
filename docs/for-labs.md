@@ -1,8 +1,8 @@
-# 给模型团队的一页说明
+# SENSUS · 给模型团队的一页说明
 
 ## 一句话
 
-发布前 10 分钟，跑一遍人文对话回归：45 道中文情绪转弯题，看代码/推理升级之后，共情和分寸有没有掉。
+发布前 10 分钟，跑一遍人文对话回归：45 道中文情绪/意图转弯题，看代码和推理升级之后，共情与分寸有没有掉。
 
 ## 它抓什么
 
@@ -37,7 +37,7 @@
 ## 怎么跑
 
 ```bash
-git clone https://github.com/luke0485/sensus-bench
+git clone https://github.com/luke0485/sensus-llm-bench
 cd sensus-bench
 export OPENAI_API_KEY=sk-...
 python eval/run.py --base-url https://api.openai.com/v1 \

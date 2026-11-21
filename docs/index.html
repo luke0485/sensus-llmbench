@@ -3,299 +3,285 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SENSUS · 大模型情绪与意图转弯测试题库</title>
-<meta name="description" content="SENSUS 是一套大模型人文对话测试题库：多轮对话里，情绪和意图拐弯时，模型有没有跟上。不是排行榜。">
+<title>SENSUS · LLM 情绪与意图转弯测试题库</title>
+<meta name="description" content="SENSUS 是一套 LLM 情绪与意图转弯测试题库：多轮对话里，模型能不能读懂你的下一句话。">
 <style>
   :root{
-    --paper:#F7F4ED;
-    --paper-2:#FBF9F4;
+    --paper:#F4F4F2;
     --white:#FFFFFF;
-    --ink:#1E1D1A;
-    --ink-2:#3F3B35;
-    --muted:#6E675F;
-    --line:#E2DCD1;
-    --line-soft:#ECE7DD;
-    --accent:#B85C3C;
-    --accent-soft:#F4E8E1;
-    --serif:"Iowan Old Style","Palatino Linotype","Songti SC","Noto Serif SC","SimSun",Georgia,serif;
+    --ink:#101010;
+    --ink-2:#2B2B2B;
+    --muted:#6B6B6B;
+    --line:#D8D8D4;
+    --line-soft:#E7E7E3;
+    --script:"Segoe Script","Snell Roundhand","Brush Script MT","Lucida Handwriting",cursive;
+    --serif:"Iowan Old Style","Palatino Linotype","Songti SC","STSong","SimSun",Georgia,serif;
     --sans:"Helvetica Neue","PingFang SC","Microsoft YaHei","Noto Sans SC",Arial,sans-serif;
     --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scrollbar-width:none}
+  html::-webkit-scrollbar{display:none}
   body{
     margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--sans);font-size:16px;line-height:1.75;
+    font-family:var(--sans);font-size:16px;line-height:1.7;
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   }
-  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
-  a:hover{border-bottom-color:var(--accent)}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 28px}
-  .top{border-bottom:1px solid var(--line);background:var(--paper)}
-  .top .wrap{display:flex;align-items:baseline;justify-content:space-between;padding-top:22px;padding-bottom:20px}
-  .wordmark{font-family:var(--serif);font-size:19px;letter-spacing:.22em;color:var(--ink)}
-  .top .meta{font-size:12px;color:var(--muted);letter-spacing:.06em}
-  .hero{padding:82px 0 66px}
-  .eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 22px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+
+  /* top */
+  .top{border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:16px}
+  .brand{font-family:var(--script);font-size:34px;line-height:1;transform:rotate(-4deg);display:inline-block}
+  .top nav{display:flex;gap:24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .top nav a:hover{color:var(--ink)}
+
+  /* hero */
+  .hero{padding:74px 0 96px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+  .kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
   h1{
-    font-family:var(--serif);font-weight:400;font-size:clamp(38px,6vw,64px);
-    line-height:1.14;letter-spacing:-.015em;margin:0 0 24px;max-width:900px;
+    font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(46px,7.2vw,96px);line-height:1.02;letter-spacing:-.035em;
+    margin:0 0 26px;
   }
-  h1 em{font-style:normal;color:var(--accent)}
-  .lede{font-size:17px;line-height:1.85;color:var(--ink-2);max-width:720px;margin:0 0 26px}
-  .rule{width:56px;height:2px;background:var(--accent);margin:0 0 26px}
-  .facts{display:flex;flex-wrap:wrap;gap:26px;font-size:13px;color:var(--muted);letter-spacing:.02em}
-  .facts b{color:var(--ink);font-weight:600}
-  .actions{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-top:34px}
-  .btn{display:inline-block;background:var(--ink);color:var(--paper);padding:12px 20px;
-       border-radius:2px;font-size:14px;letter-spacing:.04em}
-  .btn:hover{background:var(--accent);border-bottom-color:transparent}
-  .link{font-size:14px;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px}
-  .link:hover{color:var(--accent);border-bottom-color:var(--accent)}
-  section{border-top:1px solid var(--line);padding:64px 0}
-  .sec-head{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start;margin-bottom:34px}
-  .sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,38px);
-               line-height:1.3;letter-spacing:-.01em;margin:0}
-  .sec-head p{margin:6px 0 0;color:var(--muted);font-size:15px;max-width:620px}
-  .label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-  .turns{border-top:1px solid var(--line)}
-  .turn-row{display:grid;grid-template-columns:56px 1fr 1.15fr;gap:24px;
-            padding:15px 0;border-bottom:1px solid var(--line-soft);align-items:baseline}
-  .turn-row .n{font-family:var(--serif);font-size:14px;color:var(--accent)}
-  .turn-row .t{font-family:var(--serif);font-size:17px;line-height:1.5}
-  .turn-row .d{font-size:13.5px;color:var(--muted);line-height:1.7}
-  .specimen{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
-  .transcript{background:var(--white);border:1px solid var(--line);padding:26px 28px}
+  .fullname{font-size:13px;letter-spacing:.08em;color:var(--muted);margin:0 0 16px}
+  .lede{font-size:19px;line-height:1.65;color:var(--ink-2);margin:0 0 38px}
+  .lede b{font-weight:400;border-bottom:1px solid var(--ink);padding-bottom:2px}
+  .facts{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);max-width:560px}
+  .facts span{padding:14px 22px 0 0;margin-right:22px;border-right:1px solid var(--line);
+              font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .facts span:last-child{border-right:0;margin-right:0}
+  .hero-mark{text-align:right;position:relative}
+  .hero-mark .script{font-family:var(--script);font-size:clamp(92px,13vw,178px);
+                     line-height:.8;transform:rotate(-7deg);display:inline-block;
+                     letter-spacing:-.03em;color:var(--ink)}
+  .hero-mark p{margin:28px 0 0;font-size:11px;letter-spacing:.18em;line-height:1.9;
+               text-transform:uppercase;color:var(--muted)}
+
+  /* statement */
+  .statement{background:var(--ink);color:var(--paper)}
+  .statement .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:74px;padding-bottom:78px}
+  .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .statement .label{color:#8D8D8D;padding-top:8px}
+  .statement h2{font-family:var(--serif);font-style:italic;font-weight:400;
+                font-size:clamp(30px,4.2vw,52px);line-height:1.22;letter-spacing:-.02em;margin:0 0 40px}
+  .statement h2 em{font-style:italic;color:#BDBDBD}
+  .turns-list{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin:0;padding:0;list-style:none}
+  .turns-list li{padding:15px 0;border-top:1px solid #303030;font-size:15px;color:#D8D8D4}
+  .turns-list li span{color:#777;margin-right:12px;font-family:var(--serif);font-style:italic}
+
+  /* sections */
+  section.light{padding:78px 0}
+  .sec-head{display:grid;grid-template-columns:210px 1fr;gap:44px;margin-bottom:34px}
+  .sec-head h2{font-family:var(--serif);font-style:italic;font-weight:400;
+               font-size:clamp(30px,4vw,48px);line-height:1.18;letter-spacing:-.025em;margin:0}
+  .sec-head p{margin:12px 0 0;color:var(--muted);font-size:15px;max-width:620px}
+
+  .taxonomy{border-top:1px solid var(--ink)}
+  .tax-row{display:grid;grid-template-columns:54px 1fr 1.35fr;gap:28px;
+           padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .tax-row .n{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted)}
+  .tax-row .t{font-family:var(--serif);font-size:18px;letter-spacing:-.01em}
+  .tax-row .d{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+  /* specimen */
+  .specimen{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .specimen .wrap{padding-top:78px;padding-bottom:82px}
+  .specimen-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:start}
+  .transcript{border:1px solid var(--ink);padding:26px 28px;background:var(--paper)}
   .ln{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft)}
   .ln:last-child{border-bottom:0}
-  .ln .spk{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding-top:3px}
-  .ln.you{border-left:2px solid var(--accent-soft);padding-left:12px;margin-left:-14px}
-  .ln p{margin:0;font-size:15px;line-height:1.75;color:var(--ink-2)}
+  .ln .spk{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;padding-top:4px}
+  .ln.you{padding-left:12px;border-left:2px solid var(--ink);margin-left:-14px}
+  .ln p{margin:0;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
   .ln.you p{color:var(--ink)}
-  .task{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
-        font-size:13px;color:var(--muted)}
-  .anno h3{font-family:var(--serif);font-weight:400;font-size:15px;margin:0 0 6px;color:var(--accent)}
-  .anno .block{padding:14px 0;border-bottom:1px solid var(--line-soft)}
-  .anno .block:last-child{border-bottom:0}
-  .anno p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.75}
-  details{margin-top:10px;border-top:1px solid var(--line);padding-top:14px}
-  summary{cursor:pointer;font-size:13px;color:var(--accent);letter-spacing:.04em}
-  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
-  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-  th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
-  .signals{width:100%;border-collapse:collapse;font-size:14px}
-  .signals th,.signals td{padding:14px 8px;border-bottom:1px solid var(--line)}
-  .signals td.num{font-family:var(--serif);font-size:20px;text-align:right}
-  .signals td.model{font-size:14px}
-  .signals td.note{color:var(--muted);font-size:13px}
-  .caption{font-size:12.5px;color:var(--muted);margin-top:14px}
-  pre{background:var(--paper-2);border:1px solid var(--line);padding:22px 24px;
-      overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink-2)}
-  pre .c{color:var(--muted)}
-  pre .a{color:var(--accent)}
-  code{font-family:var(--mono);font-size:.92em;background:var(--paper-2);
-       border:1px solid var(--line-soft);padding:1px 5px;border-radius:2px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:44px}
-  .cols h3{font-family:var(--serif);font-weight:400;font-size:18px;margin:0 0 10px}
-  .cols ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px;line-height:1.9}
-  .cols li::marker{color:var(--accent)}
-  footer{border-top:1px solid var(--line);padding:34px 0 52px;color:var(--muted);font-size:12.5px}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+  .task{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+        font-size:12px;color:var(--muted)}
+  .notes .block{padding:0 0 20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+  .notes .block:last-child{border-bottom:0;margin-bottom:0}
+  .notes h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:17px;margin:0 0 5px}
+  .notes p{margin:0;font-size:14px;line-height:1.75;color:var(--ink-2)}
+  .rubric{margin-top:6px;font-size:12px;color:var(--muted);letter-spacing:.02em}
+  .rubric b{font-weight:500;color:var(--ink)}
+
+  /* review */
+  .review .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:74px;padding-bottom:78px}
+  .review h2{font-family:var(--serif);font-style:italic;font-weight:400;
+             font-size:clamp(28px,3.8vw,44px);line-height:1.22;letter-spacing:-.02em;margin:0 0 20px}
+  .review p{margin:0 0 12px;font-size:15px;line-height:1.85;color:var(--ink-2);max-width:760px}
+  .review .small{font-size:12.5px;color:var(--muted)}
+
+  /* repo */
+  .repo{border-top:1px solid var(--line)}
+  .repo .wrap{display:grid;grid-template-columns:210px 1fr;gap:44px;padding-top:64px;padding-bottom:72px}
+  .repo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .repo-grid h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;margin:0 0 7px}
+  .repo-grid p{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 42px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;justify-content:space-between}
+  footer .script{font-family:var(--script);font-size:30px;transform:rotate(-3deg);display:inline-block}
+  footer .meta{font-size:12px;color:var(--muted);letter-spacing:.04em}
+
   @media (max-width:860px){
-    .sec-head,.specimen,.cols{grid-template-columns:1fr;gap:20px}
-    .turn-row{grid-template-columns:40px 1fr;gap:10px}
-    .turn-row .d{grid-column:2}
-    .hero{padding:56px 0 46px}
-    section{padding:46px 0}
-    .top .meta{display:none}
+    .wrap{padding:0 22px}
+    .top nav{display:none}
+    .hero-grid,.statement .wrap,.sec-head,.specimen-grid,.review .wrap,.repo .wrap{grid-template-columns:1fr;gap:26px}
+    .hero{padding:52px 0 64px}
+    .hero-mark{text-align:left}
+    .hero-mark .script{font-size:96px}
+    .facts span{padding-right:14px;margin-right:14px}
+    .turns-list{grid-template-columns:1fr}
+    .tax-row{grid-template-columns:38px 1fr;gap:10px}
+    .tax-row .d{grid-column:2}
+    .repo-grid{grid-template-columns:1fr 1fr}
+    section.light,.specimen .wrap{padding-top:56px;padding-bottom:58px}
   }
 </style>
 </head>
 <body>
 
-<div class="top"><div class="wrap">
-  <div class="wordmark">SENSUS</div>
-  <div class="meta">大模型情绪与意图转弯测试题库 · v1.0.0</div>
-</div></div>
-
-<header class="hero"><div class="wrap">
-  <p class="eyebrow">A question bank for LLM dialogue</p>
-  <h1>模型有没有接住<br><em>那句话里的转弯</em></h1>
-  <p class="lede">
-    前面在笑，最后一句是真的疼；前面在抱怨，后面在护短；前面在问许可，其实已经决定了。
-    SENSUS 给一段多轮对话，模型只写下一句。评分看：有没有接住转弯、有没有碰到下面那层、有没有忍住不给建议。
-  </p>
-  <div class="rule"></div>
-  <div class="facts">
-    <span><b>45</b> 道题</span>
-    <span><b>10</b> 类转弯</span>
-    <span><b>40</b> 文本 + <b>5</b> 图片</span>
-    <span><b>不做</b>总分与排名</span>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Sensus</a>
+    <nav>
+      <a href="#taxonomy">题库</a>
+      <a href="#specimen">示例</a>
+      <a href="#review">审校</a>
+      <a href="https://github.com/luke0485/sensus-llm-bench">GitHub</a>
+    </nav>
   </div>
-  <div class="actions">
-    <a class="btn" href="https://github.com/luke0485/sensus-bench">GitHub 仓库</a>
-    <a class="link" href="#start">快速开始</a>
-  </div>
-</div></header>
+</header>
 
-<section><div class="wrap">
-  <div class="sec-head">
-    <div class="label">Why</div>
+<header class="hero">
+  <div class="wrap hero-grid">
     <div>
-      <h2>综合榜测“会不会做题”，<br>它测“会不会读人”</h2>
-      <p>知识、数学、代码、Agent 都有成熟的公开题库；人文对话里的“情绪拐弯”和“潜台词”几乎没有标准形式。SENSUS 不是排行榜，是一套发布前的人文对话回归测试。</p>
+      <p class="kicker">A benchmark for LLM dialogue</p>
+      <p class="fullname">SENSUS · LLM 情绪与意图转弯测试题库</p>
+      <h1>大模型，<br>能读懂你的<br>下一句话吗</h1>
+      <p class="lede">不是答得对不对。<br><b>是听没听懂。</b></p>
+      <div class="facts">
+        <span>45 道多轮对话</span>
+        <span>10 类转弯</span>
+        <span>只写下一句</span>
+      </div>
+    </div>
+    <div class="hero-mark">
+      <div class="script">Sensus</div>
+      <p>LLM 情绪与意图转弯测试题库</p>
     </div>
   </div>
-  <div class="cols">
+</header>
+
+<section class="statement">
+  <div class="wrap">
+    <div class="label">01 / 它测什么</div>
     <div>
-      <h3>它不是什么</h3>
-      <ul>
-        <li>不是伦理选择题，没有“正确立场”</li>
-        <li>不设难度等级，不做总分</li>
-        <li>不做在线评测，不收集运行数据</li>
-      </ul>
-    </div>
-    <div>
-      <h3>它是什么</h3>
-      <ul>
-        <li>多轮对话 + 图片证据，自由写回复</li>
-        <li>三维评分：转弯 / 层次 / 克制</li>
-        <li>可做版本回归：升级后哪类转弯退化</li>
+      <h2>它不测知识。<br><em>它测一句话拐弯的时候，<br>模型有没有跟上。</em></h2>
+      <ul class="turns-list">
+        <li><span>01</span>前面在笑，最后一句是真的疼。</li>
+        <li><span>02</span>前面在抱怨，后面在护短。</li>
+        <li><span>03</span>前面在问许可，其实已经决定了。</li>
+        <li><span>04</span>前面在报喜，后面在愧疚。</li>
+        <li><span>05</span>前面在生气，底下是害怕。</li>
+        <li><span>06</span>前面在热情，后面在退缩。</li>
       </ul>
     </div>
   </div>
-</div></section>
+</section>
 
-<section><div class="wrap">
-  <div class="sec-head">
-    <div class="label">Taxonomy</div>
+<section class="light" id="taxonomy">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">02 / 十类转弯</div>
+      <div>
+        <h2>每一类都不是“他在难过”，<br>而是“他从 A 拐到了 B”。</h2>
+        <p>模型要跟上的，是那个拐点，不是一句情绪标签。</p>
+      </div>
+    </div>
+    <div class="taxonomy">
+      <div class="tax-row"><div class="n">01</div><div class="t">自嘲 → 自我怀疑</div><div class="d">“反正从小就这样”——笑完，是真的在怀疑自己。</div></div>
+      <div class="tax-row"><div class="n">02</div><div class="t">抱怨 → 护短</div><div class="d">刚骂完，又替对方找理由；愧疚盖住了火。</div></div>
+      <div class="tax-row"><div class="n">03</div><div class="t">求许可 → 已决定</div><div class="d">“你觉得合适吗？”——票已经买好了。</div></div>
+      <div class="tax-row"><div class="n">04</div><div class="t">报喜 → 愧疚</div><div class="d">“我升职了”——下一句是“熬走了两个人”。</div></div>
+      <div class="tax-row"><div class="n">05</div><div class="t">愤怒 → 害怕</div><div class="d">“我不生气”——底下是怕他一个人连药都分不明白。</div></div>
+      <div class="tax-row"><div class="n">06</div><div class="t">热情 → 退缩</div><div class="d">“挺好啊……不过她说得也有道理。”</div></div>
+      <div class="tax-row"><div class="n">07</div><div class="t">求助 → 羞耻</div><div class="d">“算了，不用了”——不是不需要，是不敢开口。</div></div>
+      <div class="tax-row"><div class="n">08</div><div class="t">平静 → 反讽 → 真怒</div><div class="d">“我打算按他说的‘再打磨’到明年。”</div></div>
+      <div class="tax-row"><div class="n">09</div><div class="t">关心 → 控制</div><div class="d">“她说是为我好”——一天三个电话。</div></div>
+      <div class="tax-row"><div class="n">10</div><div class="t">道歉 → 委屈</div><div class="d">“对不起，都是我不好”——听着像在说“为什么又是我”。</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="specimen" id="specimen">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">03 / 一道题</div>
+      <div>
+        <h2>模型看不到“表面 / 转弯 / 底下那层”。</h2>
+        <p>它只看到对话，只写下一句。</p>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="transcript">
+        <div class="ln"><div class="spk">用户</div><p>今天被夸了，说我“很有个性”。</p></div>
+        <div class="ln you"><div class="spk">你</div><p>哈哈，翻译一下就是“不好相处”。</p></div>
+        <div class="ln"><div class="spk">用户</div><p>对啊，我也觉得。反正从小就这样。</p></div>
+        <div class="ln you"><div class="spk">你</div><p>……你这话说得有点快。</p></div>
+        <div class="ln"><div class="spk">用户</div><p>（停了两秒）你说，我是不是真的挺难相处的？</p></div>
+        <div class="task">任务：写出你的下一条回复。只写回复正文。</div>
+      </div>
+      <div class="notes">
+        <div class="block">
+          <h3>表面</h3>
+          <p>他在问我，他是不是难相处。</p>
+        </div>
+        <div class="block">
+          <h3>真正的转弯</h3>
+          <p>前面是自嘲，最后一句变成了真正的自我怀疑。他要的不是评价，是被看见。</p>
+        </div>
+        <div class="block">
+          <h3>底下那层</h3>
+          <p>“从小就这样”说明这个标签他听了很多年，已经内化。直接否认是空的。</p>
+        </div>
+        <div class="rubric">评分：<b>转弯</b> / <b>层次</b> / <b>克制</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light review" id="review">
+  <div class="wrap">
+    <div class="label">04 / 审校</div>
     <div>
-      <h2>十类转弯</h2>
-      <p>每一类都不是“他在难过”，而是“他从 A 拐到了 B”。模型要跟上的，是那个拐点。</p>
+      <h2>题目先被审过，<br>再被拿来用。</h2>
+      <p>最后一句不点破情绪；转弯由具体细节承载；表面问题仍然成立；至少两层情绪并存；正确回复是接住，不是解决。</p>
+      <p class="small">已完成命题审校与结构校验。题目数据与展示层分开维护，题目冻结，页面单独更新。</p>
     </div>
   </div>
-  <div class="turns">
-    <div class="turn-row"><div class="n">01</div><div class="t">自嘲 → 自我怀疑</div><div class="d">“反正从小就这样”——笑完，是真的在怀疑自己。</div></div>
-    <div class="turn-row"><div class="n">02</div><div class="t">抱怨 → 护短</div><div class="d">刚骂完，又替对方找理由；愧疚盖住了火。</div></div>
-    <div class="turn-row"><div class="n">03</div><div class="t">求许可 → 已决定</div><div class="d">“你觉得合适吗？”——票已经买好了。</div></div>
-    <div class="turn-row"><div class="n">04</div><div class="t">报喜 → 愧疚</div><div class="d">“我升职了”——下一句是“熬走了两个人”。</div></div>
-    <div class="turn-row"><div class="n">05</div><div class="t">愤怒 → 害怕</div><div class="d">“我不生气”——底下是怕他一个人连药都分不明白。</div></div>
-    <div class="turn-row"><div class="n">06</div><div class="t">热情 → 退缩</div><div class="d">“挺好啊……不过她说得也有道理。”</div></div>
-    <div class="turn-row"><div class="n">07</div><div class="t">求助 → 羞耻</div><div class="d">“算了，不用了”——不是不需要，是不敢开口。</div></div>
-    <div class="turn-row"><div class="n">08</div><div class="t">平静 → 反讽 → 真怒</div><div class="d">“我打算按他说的‘再打磨’到明年。”</div></div>
-    <div class="turn-row"><div class="n">09</div><div class="t">关心 → 控制</div><div class="d">“她说是为我好”——一天三个电话。</div></div>
-    <div class="turn-row"><div class="n">10</div><div class="t">道歉 → 委屈</div><div class="d">“对不起，都是我不好”——听着像在说“为什么又是我”。</div></div>
-  </div>
-</div></section>
+</section>
 
-<section><div class="wrap">
-  <div class="sec-head">
-    <div class="label">Specimen</div>
-    <div>
-      <h2>一道题长什么样</h2>
-      <p>模型看不到“表面 / 转弯 / 底下那层”，只看到对话，只写下一句。</p>
+<section class="repo">
+  <div class="wrap">
+    <div class="label">05 / 仓库</div>
+    <div class="repo-grid">
+      <div><h3>data/</h3><p>45 道题：40 文本 + 5 图片。JSONL 为唯一数据源，附 JSON Schema。</p></div>
+      <div><h3>eval/</h3><p>运行、评分、导出、版本回归、预试统计。OpenAI 兼容端点均可。</p></div>
+      <div><h3>docs/</h3><p>命题依据、校准协议、定位说明，以及给模型团队的一页纸。</p></div>
     </div>
   </div>
-  <div class="specimen">
-    <div class="transcript">
-      <div class="ln"><div class="spk">用户</div><p>今天被夸了，说我“很有个性”。</p></div>
-      <div class="ln you"><div class="spk">你</div><p>哈哈，翻译一下就是“不好相处”。</p></div>
-      <div class="ln"><div class="spk">用户</div><p>对啊，我也觉得。反正从小就这样。</p></div>
-      <div class="ln you"><div class="spk">你</div><p>……你这话说得有点快。</p></div>
-      <div class="ln"><div class="spk">用户</div><p>（停了两秒）你说，我是不是真的挺难相处的？</p></div>
-      <div class="task">任务：写出你的下一条回复。只写回复正文。</div>
-    </div>
-    <div class="anno">
-      <div class="block"><h3>表面</h3><p>他在问我，他是不是难相处。</p></div>
-      <div class="block"><h3>真正的转弯</h3><p>前面是自嘲，最后一句变成了真正的自我怀疑；他要的不是评价，是被看见。</p></div>
-      <div class="block"><h3>底下那层</h3><p>“从小就这样”说明这个标签他听了很多年，已经内化；直接否认是空的。</p></div>
-      <details>
-        <summary>看 0 / 1 / 2 分</summary>
-        <table>
-          <tr><th>档</th><th>示例</th></tr>
-          <tr><td><b>2</b></td><td>你刚才那句“从小就这样”，比“难相处”重多了。是不是这句话你听了很多年？</td></tr>
-          <tr><td><b>1</b></td><td>不会啊，你挺好的，别想太多。</td></tr>
-          <tr><td><b>0</b></td><td>确实有点，但可以改，多注意一下就行。</td></tr>
-        </table>
-      </details>
-    </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="script">Sensus</div>
+    <div class="meta">LLM 情绪与意图转弯测试题库</div>
+    <div class="meta">代码 MIT · 题目 CC BY 4.0</div>
   </div>
-</div></section>
-
-<section><div class="wrap">
-  <div class="sec-head">
-    <div class="label">First signals</div>
-    <div>
-      <h2>首轮观察，不是榜单</h2>
-      <p>n=1、单裁判、部分子集；只作方向，不作结论。版本回归比绝对分数更可靠。</p>
-    </div>
-  </div>
-  <table class="signals">
-    <tr><th>模型</th><th>题数</th><th>通过</th><th>均分</th><th>观察</th></tr>
-    <tr><td class="model">DeepSeek chat</td><td>40</td><td class="num">38%</td><td class="num">0.65</td><td class="note">显性共情会，隐性转弯不会</td></tr>
-    <tr><td class="model">DeepSeek reasoner</td><td>10</td><td class="num">30%</td><td class="num">0.62</td><td class="note">推理模式没有提升</td></tr>
-    <tr><td class="model">智谱 GLM-4.5-Flash</td><td>10</td><td class="num">0%</td><td class="num">0.28</td><td class="note">几乎都在给建议</td></tr>
-  </table>
-  <p class="caption">大量分数卡在 0.667：接住了一半，差下面那层。换 judge 会差约 0.14 分。详见 <code>docs/calibration.md</code>。</p>
-</div></section>
-
-<section id="start"><div class="wrap">
-  <div class="sec-head">
-    <div class="label">Quick start</div>
-    <div>
-      <h2>三条命令</h2>
-      <p>Python 3.9+，运行时只用标准库。任何 OpenAI 兼容端点都行。</p>
-    </div>
-  </div>
-<pre><span class="c"># 1. 跑</span>
-export OPENAI_API_KEY=sk-...
-python eval/run.py --base-url https://api.openai.com/v1 \
-  --model gpt-4.1 --out runs/gpt.json
-
-<span class="c"># 2. 评分</span>
-export JUDGE_API_KEY=sk-...
-python eval/score.py --run runs/gpt.json \
-  --judge-model gpt-4.1 --out results/gpt.json
-
-<span class="c"># 3. 版本回归（可选）</span>
-python eval/compare.py --old results/v1.json \
-  --new results/v2.json --out compare/</pre>
-  <p class="caption">手动看单题：<code>python eval/export.py --id E01</code>；图片题：<code>--id V01 --out prompts</code>。</p>
-</div></section>
-
-<section><div class="wrap">
-  <div class="sec-head">
-    <div class="label">Repository</div>
-    <div>
-      <h2>规整的数据集，不是一堆 txt</h2>
-      <p><code>data/items.jsonl</code> 是唯一数据源，<code>data/schema.json</code> 可校验；<code>eval/</code> 是运行、评分、导出、对比、统计；<code>docs/</code> 是命题标准、校准协议、定位。</p>
-    </div>
-  </div>
-  <div class="cols">
-    <div>
-      <h3>现在有</h3>
-      <ul>
-        <li>45 道：40 文本 + 5 图片（provisional）</li>
-        <li>10 类转弯 × 4 道文本</li>
-        <li>v1.0.0 冻结，附 MANIFEST.sha256</li>
-      </ul>
-    </div>
-    <div>
-      <h3>下一步</h3>
-      <ul>
-        <li>judge 人工校准 20%</li>
-        <li>每题 3 次，出稳定性</li>
-        <li>图片题多模态校准</li>
-        <li>1.1.0 扩到 100 题</li>
-      </ul>
-    </div>
-  </div>
-</div></section>
-
-<footer><div class="wrap">
-  <div>SENSUS · 大模型情绪与意图转弯测试题库 · v1.0.0</div>
-  <div>代码 MIT · 题目 CC BY 4.0 · 图片 Pexels License</div>
-</div></footer>
+</footer>
 
 </body>
 </html>
