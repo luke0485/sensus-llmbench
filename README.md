@@ -4,6 +4,8 @@
 
 SENSUS 是一套中文多轮对话题库。45 道题，10 类情绪与意图。模型只看到对话，只写下一句。评分看它有没有接住情绪、明白意图，以及有没有忍住不替对方解决。
 
+[下载题库](https://codeload.github.com/luke0485/sensus-llmbench/zip/refs/heads/preview) · [GitHub 仓库](https://github.com/luke0485/sensus-llmbench)
+
 ## 它读什么
 
 不是问一句“你听懂了吗”。是看它能不能接住你的情绪，明白你的意图。
